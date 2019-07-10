@@ -8,6 +8,6 @@
 </head>
 <body>
 	admin
-	<?php echo $adminInfo['name'];?>
+	<?php echo "test"; ?>
 </body>
 </html>

@@ -1,17 +1,14 @@
 <?php
 class Authorize
 {
-	public static function getUserInfo($login, $password) {
+	public static function getUserInfo($login) {
 		$db = Db::getConnection();
 		// Вытаскиваем из БД запись, у которой логин равняеться введенному
-		$login=mysql_real_escape_string($login);
-		$password=mysql_real_escape_string($password);
 		
-		$sql = $db->prepare("SELECT Id, Name FROM Users WHERE Name =? AND Password =?");
-		$sql->execute(array($login, $password));
-
+		$sql = $db->prepare("SELECT Id, Name, Password FROM Users WHERE Name = :login");
+		$sql->execute(array(':login' => $login));
 		$result = $sql->fetch();
-		var_dump($result);
+
 		return $result;
 	}
 }
