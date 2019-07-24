@@ -1,6 +1,7 @@
 <?php
 
-class Admin
+
+class Users
 {
 	public static function getAdminInfo() {
 		/*$db = Db::getConnection();

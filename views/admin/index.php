@@ -7,7 +7,13 @@
 <title>Admin</title>
 </head>
 <body>
-	admin
-	<?php echo "test"; ?>
+	<?php echo $this->head; ?>
+	<div class="container-wrapper container">
+		<?php echo $this->menu; ?>	
+		<div class="content">
+			Это главная страница админки
+		</div>
+	</div>
+	<?php echo $this->footer; ?>
 </body>
 </html>
