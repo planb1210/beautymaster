@@ -8,11 +8,23 @@ class UsersController extends AdminController{
 	public function actionIndex()
 	{		
 		$this->CheckPermissions();
-		//$menu = file_get_contents(ROOT.'\views\shared\adminMenu.php');	
 		$this->AddPartials();
 		
+		//$users = Users::getUsers();
 		require_once(ROOT . '/views/users/index.php');
 
+		return true;
+	}
+	
+	public function EditUser()
+	{		
+	
+		if( $_POST['id']==null){
+			Users::addUser($_POST['name'], $_POST['email'], $_POST['password']);
+		}
+		else{
+			Users::editUser($_POST['id'], $_POST['name'], $_POST['email'], $_POST['password']);
+		}
 		return true;
 	}
 }

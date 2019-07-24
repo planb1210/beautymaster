@@ -12,9 +12,9 @@ class AuthorizeController {
 			
 			if($userInfo['Password'] === md5(md5($_POST['password'])))
 			{
-				print_r("works");
 				setcookie("beautyLogin", $userInfo['Name'], time()+60*60*24*30);
-				//header("Location: check.php"); exit();
+				header("Location: /admin");
+				exit();				
 			}
 		}
 		require_once(ROOT . '/views/authorize/index.php');
