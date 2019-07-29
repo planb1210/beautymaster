@@ -4,5 +4,7 @@ return array(
 	'news' => 'news/index', 
 	'admin' => 'admin/index',
 	'users' => 'users/index',
-	'authorize' => 'authorize/index'
+	'authorize' => 'authorize/index',
+	'home/test' => 'home/test',
+	'home' => 'home/index'
 	);
