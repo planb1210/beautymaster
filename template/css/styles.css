@@ -32,3 +32,31 @@
 .navbar-collapse{
  justify-content: flex-end;
 }
+
+.btn {
+	font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    background-image: none;
+    padding: 6px 12px;
+    border-width: 1px;
+    border-style: solid;
+	border-image: initial;
+    margin-bottom: 5px;
+	text-decoration: none;
+}
+
+.btn-primary {
+    background-color: rgb(88, 205, 229);
+    color: rgb(255, 255, 255);
+    border-color: rgb(88, 205, 229);
+}
+
+.middle-block{
+	width:400px;
+	margin: 0 auto;
+}

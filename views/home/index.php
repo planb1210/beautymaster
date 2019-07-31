@@ -22,6 +22,33 @@
 				</form>
 				<div data-bind="text:name, click: test"></div>
 				
+				<div class="middle-block">
+					<div class="col-sm-9">
+						<!-- ko with: masterModel -->
+							<a href="#" class="btn btn-primary" data-bind="click: viewMasters">Выбор мастера</a>
+							<div data-bind="visible: isSelectedMode">
+								<!-- ko foreach: masters -->
+									<div data-bind="text: name"></div>
+								<!-- /ko -->
+							</div>
+						<!-- /ko -->
+					</div>
+					<div class="col-sm-9">
+						<a href="#" class="btn btn-primary">Выбор услуги</a>
+						<div>
+						список услуг
+						</div>
+					</div>
+					<div class="col-sm-9">
+						<a href="#" class="btn btn-primary">Выбор даты</a>
+						<div>
+						календарь
+						</div>
+					</div>
+					
+				</div>
+				
+				<!--
 				 <nav class="navbar navbar-expand-lg fixed-top ">  
 				 <a class="navbar-brand" href="#">Home</a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">  
@@ -41,7 +68,7 @@
 				 <a class="nav-link " data-value="contact" href="#">Contact</a>       </li> 
 				</ul> 
 				</div>
-				</nav>
+				</nav>-->
 
 
 			</div>
@@ -49,6 +76,7 @@
 		<div class="container-footer"></div>
 		<script type="text/javascript" src="/scripts/jquery-3.4.1.js"></script>
 		<script type="text/javascript" src="/scripts/knockout-3.5.0.js"></script>
+		<script type="text/javascript" src="/scripts/models/home/masters.js"></script>
 		<script type="text/javascript" src="/scripts/models/home/properties.js"></script>
 		<script>
 			var viewModel = new PropertyModel("fuck fuck");

@@ -20,7 +20,7 @@ class HomeController {
 	
 	public function actionTest()
 	{
-		echo $_POST['id']."------refefefefefefef";
+		echo $_POST['id']."------список мастеров";
 		
 		return true;
 	}
