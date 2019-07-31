@@ -6,5 +6,5 @@ return array(
 	'users/([0-9]+)' => 'users/edit/$1',
 	'users' => 'users/index',
     'authorize' => 'authorize/index',
-	'home/test' => 'home/test',
+	'home/GetMasters' => 'home/GetMasters',
 	'home' => 'home/index'	);

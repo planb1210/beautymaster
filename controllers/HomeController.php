@@ -18,10 +18,10 @@ class HomeController {
 		return true;
 	}
 	
-	public function actionTest()
+	public function actionGetMasters()
 	{
-		echo $_POST['id']."------список мастеров";
-		
+		$masters = Home::getMasters();
+		echo json_encode($masters, JSON_UNESCAPED_UNICODE);
 		return true;
 	}
 }

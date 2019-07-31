@@ -1,63 +1,17 @@
 <?php
-
-
 class Home
 {
-
-	/** Returns single news items with specified id
-	* @rapam integer &id
-	*/
-
-	public static function getNewsItemByID($id)
-	{
-		$id = intval($id);
-
-		if ($id) {
-/*			$host = 'localhost';
-			$dbname = 'php_base';
-			$user = 'root';
-			$password = '';
-			$db = new PDO("mysql:host=$host;dbname=$dbname", $user, $password);*/
-			$db = Db::getConnection();
-			$result = $db->query('SELECT * FROM news WHERE id=' . $id);
-
-			/*$result->setFetchMode(PDO::FETCH_NUM);*/
-			$result->setFetchMode(PDO::FETCH_ASSOC);
-
-			$newsItem = $result->fetch();
-
-			return $newsItem;
-		}
-
-	}
-
-	/**
-	* Returns an array of news items
-	*/
-	public static function getNewsList() {
-/*		$host = 'localhost';
-		$dbname = 'php_base';
-		$user = 'root';
-		$password = '';
-		$db = new PDO("mysql:host=$host;dbname=$dbname", $user, $password);*/
-
+	public static function getMasters(){
 		$db = Db::getConnection();
-		$newsList = array();
-
-		$result = $db->query('SELECT id, title, date, author_name, short_content FROM news ORDER BY id ASC LIMIT 10');
-
+		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$result = $db->query('SELECT id, Name, Email FROM users  WHERE Role = 1 ORDER BY id ASC');
 		$i = 0;
 		while($row = $result->fetch()) {
-			$newsList[$i]['id'] = $row['id'];
-			$newsList[$i]['title'] = $row['title'];
-			$newsList[$i]['date'] = $row['date'];
-			$newsList[$i]['author_name'] = $row['author_name'];
-			$newsList[$i]['short_content'] = $row['short_content'];
+			$usersList[$i]['id'] = $row['id'];
+			$usersList[$i]['Name'] = $row['Name'];
+			$usersList[$i]['Email'] = $row['Email'];
 			$i++;
 		}
-
-		return $newsList;
-	
-}
-
+		return $usersList;		
+	}
 }

@@ -15,62 +15,46 @@
 				<div class="mask-top-content"></div>
 			</div>			
 			<div class="content">
-				<form method="post" action="/">
-				  <p><b>тестирование формы</b></p>
-				  <p><input type="text" id="id" name="id" value="12" size="40">
-				  <p><input type="submit"></p>
-				</form>
-				<div data-bind="text:name, click: test"></div>
-				
 				<div class="middle-block">
-					<div class="col-sm-9">
-						<!-- ko with: masterModel -->
-							<a href="#" class="btn btn-primary" data-bind="click: viewMasters">Выбор мастера</a>
-							<div data-bind="visible: isSelectedMode">
-								<!-- ko foreach: masters -->
-									<div data-bind="text: name"></div>
+					<!-- ko if: isEmptyModeUse -->
+						<div class="list-item">
+							<div class="list-item-wrapper">
+								<h3 data-bind="click: takeMasterMode">Выбор мастера</h3>
+								<!-- ko if: selectedMaster -->
+									<div data-bind="text: selectedMaster().name"></div>
 								<!-- /ko -->
 							</div>
-						<!-- /ko -->
-					</div>
-					<div class="col-sm-9">
-						<a href="#" class="btn btn-primary">Выбор услуги</a>
-						<div>
-						список услуг
 						</div>
-					</div>
-					<div class="col-sm-9">
-						<a href="#" class="btn btn-primary">Выбор даты</a>
-						<div>
-						календарь
+						<div class="list-item" data-bind="visible: !isMasterModeUse()">
+							<div class="list-item-wrapper">
+								<h3>Выбор услуги</h3>
+								<div>
+								список услуг
+								</div>
+							</div>
 						</div>
+						<div class="list-item" data-bind="visible: !isMasterModeUse()">
+							<div class="list-item-wrapper">
+								<h3>Выбор даты</h3>
+								<div>
+								календарь
+								</div>
+							</div>
+						</div>
+					<!-- /ko -->
+					<div data-bind="visible: isMasterModeUse">
+						<!-- ko with: masterModel -->
+							<div class="list-item-wrapper">
+								<h3 data-bind="click: changeMode">Выбор мастера</h3>
+							</div>
+							<div data-bind="visible: isSelectedMode">
+								<!-- ko foreach: masters -->
+									<div data-bind="text: name, click:function(data, event) { $parent.selectMaster(data) } "></div>
+								<!-- /ko -->
+							</div>
+						<!-- /ko -->					
 					</div>
-					
 				</div>
-				
-				<!--
-				 <nav class="navbar navbar-expand-lg fixed-top ">  
-				 <a class="navbar-brand" href="#">Home</a>
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">  
-				 <span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse " id="navbarSupportedContent">     <ul class="navbar-nav mr-4">
-				 <li class="nav-item">
-					 <a class="nav-link" data-value="about" href="#">About</a>        </li>  
-				<li class="nav-item">
-					<a class="nav-link " data-value="portfolio"href="#">Portfolio</a>    
-				 </li>
-				 <li class="nav-item"> 
-					<a class="nav-link " data-value="blog" href="#">Blog</a>         </li>   
-				<li class="nav-item">  
-				   <a class="nav-link " data-value="team" href="#">         Team</a>       </li>  
-				<li class="nav-item"> 
-				 <a class="nav-link " data-value="contact" href="#">Contact</a>       </li> 
-				</ul> 
-				</div>
-				</nav>-->
-
-
 			</div>
 		</div>
 		<div class="container-footer"></div>

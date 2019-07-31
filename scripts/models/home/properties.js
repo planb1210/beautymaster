@@ -4,15 +4,23 @@ var PropertyModel = class {
     constructor(name) {
         var self = this;
 		this.name = name;
+		
 		this.masterModel = new MastersModel();
+		this.isMasterModeUse = ko.computed(function() {
+			return self.masterModel.isSelectedMode();
+		});
+		this.selectedMaster = ko.computed(function() {
+			return self.masterModel.selectedMaster();
+		});		
+		
+		this.isEmptyModeUse = ko.computed(function() {
+			return !self.masterModel.isSelectedMode();
+		});	
 	}
 	
-	test() {
-
-		$.post("/home/test", { id: 1232})
-		.done(function(data) {
-			console.log(data);
-		});
+	takeMasterMode() {
+		var self = this;
+		self.masterModel.viewMasters();
 	}
 };
 
