@@ -20,8 +20,24 @@ class HomeController {
 	
 	public function actionGetMasters()
 	{
-		$masters = Home::getMasters();
+		$id = null;
+		if(isset($_POST['id'])){
+			$id = $_POST['id'];
+		}
+		$masters = Home::getMasters($id);
 		echo json_encode($masters, JSON_UNESCAPED_UNICODE);
+		return true;
+	}
+	
+	public function actionGetSkills()
+	{
+		$id = null;
+		if(isset($_POST['id'])){
+			$id = $_POST['id'];
+		}
+		$skills = Home::getSkills($id);
+		//echo $skills;
+		echo json_encode($skills, JSON_UNESCAPED_UNICODE);
 		return true;
 	}
 }

@@ -1,17 +1,45 @@
 <?php
 class Home
 {
-	public static function getMasters(){
+	public static function getMasters($id){
 		$db = Db::getConnection();
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$result = $db->query('SELECT id, Name, Email FROM users  WHERE Role = 1 ORDER BY id ASC');
-		$i = 0;
-		while($row = $result->fetch()) {
-			$usersList[$i]['id'] = $row['id'];
-			$usersList[$i]['Name'] = $row['Name'];
-			$usersList[$i]['Email'] = $row['Email'];
-			$i++;
+
+		if($id != null){
+			$sqlText = "select 
+						u.Id, u.Name, u.Email
+						from skills sk
+						left join users u on sk.EmployeeId = u.Id
+						where sk.ServiceId = :id";
+			$result = $db->prepare($sqlText);
+			$result->execute(array(':id' => $id));
 		}
-		return $usersList;		
+		else{
+			$result = $db->query('SELECT Id, Name, Email FROM users  WHERE Role = 1 ORDER BY id ASC');
+		}
+		
+		return $result->fetchAll(PDO::FETCH_CLASS);	
 	}
+	
+	public static function getSkills($id){
+		$db = Db::getConnection();
+		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);		
+		
+		if($id != null){
+			$sqlText = "select 
+					s.Id, s.Name, s.Price, s.Duration, s.Description
+					from skills sk
+					left join services s on sk.ServiceId = s.Id
+					where EmployeeId = :id";
+			$result = $db->prepare($sqlText);
+			$result->execute(array(':id' => $id));
+		}
+		else{
+			$sqlText = "select 
+						s.Id, s.Name, s.Price, s.Duration, s.Description
+						from services s";
+			$result = $db->query($sqlText);
+		}
+		return $result->fetchAll(PDO::FETCH_CLASS);		
+	}	
 }
