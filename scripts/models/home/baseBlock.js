@@ -16,5 +16,10 @@ var BaseBlock = class {
 		var self = this;
 		self.isSelectedMode(!self.isSelectedMode());
 	}
+	
+	clearSelectedItem(){
+		var self = this;
+		self.selectedItem(null);
+	}
 };
 

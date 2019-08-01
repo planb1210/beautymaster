@@ -53,10 +53,10 @@ body {
 .list-item{
     min-height: 81px;
     border-bottom: 1px solid rgba(0,0,0,.12);
+	position: relative;
 }
 
 .list-item-wrapper{
-	cursor: pointer;
     padding: 0 60px 0 16px;
     width: 100%;
     box-sizing: border-box;
@@ -64,11 +64,38 @@ body {
     min-height: 74px;
 }
 
-.list-wrapper h3 {
-    margin: 0 0 5px;
-    line-height: 20px;
-    padding-top: 20px;
-    font-size: 16px;
-    color: #302f2f!important;
+.list-item-wrapper h3 {
+	cursor: pointer;
+}
+
+.mdi {
+    display: inline-block;
+    font: normal normal normal 24px/1 MaterialDesignIcons;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transform: translate(0,0);
+}
+
+.mdi-close-circle-outline:before {
+    content: "\f227";
+}
+
+.remove-button {
+    padding: 17px;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    display: block;
+    margin: -31px 0 0;
+    width: 62px;
+    height: 62px;
+    position: absolute;
+    top: 50%;
+    right: -6px;
+    outline: 0;
+    cursor: pointer;
+	font-size: 24px;
+    line-height: 28px;
 }
 

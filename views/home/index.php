@@ -5,6 +5,7 @@
 		<title>BeautyMaster</title>
 		<link href="/template/css/styles.css" rel="stylesheet" type="text/css" media="screen" />
 		<link rel="stylesheet" href="/scripts/bootstrap/bootstrap.css" >
+		<link href="https://cdn.materialdesignicons.com/3.8.95/css/materialdesignicons.min.css" rel="stylesheet">
 	</head>
 	<body>
 		<div class="container-header">
@@ -29,6 +30,9 @@
 								</div>
 								<!-- /ko -->
 							</div>
+							<!-- ko if: selectedMaster -->
+								<i data-bind="click: clearSelectedMaster" class="mdi y-icon remove-button mdi-close-circle-outline"></i>
+							<!-- /ko -->
 						</div>
 						<div class="list-item" data-bind="visible: !isMasterModeUse()">
 							<div class="list-item-wrapper">
@@ -42,6 +46,9 @@
 								</div>
 								<!-- /ko -->
 							</div>
+							<!-- ko if: selectedSkill -->
+								<i data-bind="click: clearSelectedSkill" class="mdi y-icon remove-button mdi-close-circle-outline"></i>
+							<!-- /ko -->
 						</div>
 						<div class="list-item" data-bind="visible: !isMasterModeUse()">
 							<div class="list-item-wrapper">

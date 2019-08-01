@@ -32,9 +32,19 @@ var PropertyModel = class {
 		self.masterModel.viewMasters(self.selectedSkill());
 	}
 	
+	clearSelectedMaster() {
+		var self = this;
+		self.masterModel.clearSelectedItem();
+	}	
+	
 	takeSkillsMode() {
 		var self = this;
 		self.skillModel.viewSkills(self.selectedMaster());
+	}
+	
+	clearSelectedSkill() {
+		var self = this;
+		self.skillModel.clearSelectedItem();
 	}
 };
 
