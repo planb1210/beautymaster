@@ -1,5 +1,7 @@
 ﻿"use strict";
 
+infuser.defaults.templateUrl = "/views/home/templates/";
+
 var Master = class {
     constructor(data) {
         var self = this;
@@ -14,6 +16,7 @@ class MastersBlock extends BaseBlock {
 		super();		
 		this.masters = ko.observableArray([]);
 		this.getMastersUrl = "/home/GetMasters";
+		this.template = "mastersBlock";
 	}
 	
 	viewMasters(skill) {

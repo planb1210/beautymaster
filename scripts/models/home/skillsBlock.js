@@ -1,5 +1,7 @@
 ﻿"use strict";
 
+infuser.defaults.templateUrl = "/views/home/templates/";
+
 var Skill = class {
     constructor(data) {
         var self = this;
@@ -16,6 +18,7 @@ class SkillsBlock extends BaseBlock {
 		super();		
 		this.skills = ko.observableArray([]);
 		this.getSkillsUrl = "/home/GetSkills";
+		this.template = "mastersBlock";
 	}
 	
 	viewSkills(master) {
@@ -38,6 +41,10 @@ class SkillsBlock extends BaseBlock {
 				});
 			}
 		});
+	}
+	
+	whichTemplateToUse() {
+		return 'skillsBlock2';
 	}
 };
 

@@ -59,16 +59,13 @@
 							</div>
 						</div>
 					<!-- /ko -->
+					
 					<div data-bind="visible: isMasterModeUse">
 						<!-- ko with: masterModel -->
 							<div class="list-item-wrapper">
 								<h3 data-bind="click: changeMode">Выбор мастера</h3>
 							</div>
-							<div data-bind="visible: isSelectedMode">
-								<!-- ko foreach: masters -->
-									<div data-bind="text: name, click:function(data) { $parent.selectItem(data) } "></div>
-								<!-- /ko -->
-							</div>
+							<div data-bind="visible: isSelectedMode, template: { name: template, foreach: masters }"></div>
 						<!-- /ko -->					
 					</div>
 					
@@ -77,11 +74,7 @@
 							<div class="list-item-wrapper">
 								<h3 data-bind="click: changeMode">Выбор услуги</h3>
 							</div>
-							<div data-bind="visible: isSelectedMode">
-								<!-- ko foreach: skills -->
-									<div data-bind="text: name, click:function(data) { $parent.selectItem(data) } "></div>
-								<!-- /ko -->
-							</div>
+							<div data-bind="visible: isSelectedMode, template: { name: template, foreach: skills }"></div>
 						<!-- /ko -->					
 					</div>
 				</div>
@@ -90,6 +83,8 @@
 		<div class="container-footer"></div>
 		<script type="text/javascript" src="/scripts/jquery-3.4.1.js"></script>
 		<script type="text/javascript" src="/scripts/knockout-3.5.0.js"></script>
+		<script type="text/javascript" src="/scripts/knockout-latest.debug.js"></script>
+		<script type="text/javascript" src="/scripts/koExternalTemplateEngine_all.js"></script>
 		<script type="text/javascript" src="/scripts/models/home/baseBlock.js"></script>
 		<script type="text/javascript" src="/scripts/models/home/mastersBlock.js"></script>
 		<script type="text/javascript" src="/scripts/models/home/skillsBlock.js"></script>
