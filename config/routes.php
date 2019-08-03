@@ -10,4 +10,5 @@ return array(
 	'users' => 'users/index',
     'authorize' => 'authorize/index',
 	'home/GetMasters' => 'home/GetMasters',
+	'home/GetSkills' => 'home/GetSkills',
 	'home' => 'home/index'	);
