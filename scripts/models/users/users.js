@@ -17,6 +17,7 @@ var UsersModel = class {
 		this.users = ko.observableArray([]);
 		this.getUsersUrl = "/users/GetUsers";
 		this.deleteUsersUrl = "/users/deleteUser";
+	    	this.addUsersUrl = "/users/addUser"
 		
 		this.viewUsers();
 				
@@ -48,7 +49,7 @@ var UsersModel = class {
 		var arr=[];
 		for(var i=0; i<4; i++){
 		arr.push(form[i].value);}
-		$.post('addUser', {name:arr[0], email:arr[1], password:arr[2], submit:arr[3]})
+		$.post(self.addUsersUrl, {name:arr[0], email:arr[1], password:arr[2], submit:arr[3]})
 			.done(function(result) {
 					var item = JSON.parse(result);
 					self.users.push(new User(item));
