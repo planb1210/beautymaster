@@ -23,12 +23,11 @@ class UsersController extends AdminController{
 			Users::deleteUser($_POST['id']);
 			exit();
 			}
-		elseif($_POST['submit']=='Отобразить'){
-			Users::getUsers();
-			exit();
-			}
+		
 		elseif(!isset($_POST['id'])){
-			Users::addUser($_POST['name'], $_POST['email'], $_POST['password']);
+			$newUser = Users::addUser($_POST['name'], $_POST['email'], $_POST['password']);
+			echo json_encode($newUser, JSON_UNESCAPED_UNICODE);
+			return true;
 		}
 		
 		else{
@@ -38,6 +37,13 @@ class UsersController extends AdminController{
 		
 		}
 		
+	public function actionGetUsers()
+	{
+		$users = Users::getUsers();
+		echo json_encode($users, JSON_UNESCAPED_UNICODE);
+		return true;
 	}
+		
+}
 	
 

@@ -3,26 +3,7 @@
 
 class Users
 {
-	public static function getAdminInfo() {
-		/*$db = Db::getConnection();
-		$newsList = array();
-
-		$result = $db->query('SELECT id, title, date, author_name, short_content FROM news ORDER BY id ASC LIMIT 10');
-
-		$i = 0;
-		while($row = $result->fetch()) {
-			$newsList[$i]['id'] = $row['id'];
-			$newsList[$i]['title'] = $row['title'];
-			$newsList[$i]['date'] = $row['date'];
-			$newsList[$i]['author_name'] = $row['author_name'];
-			$newsList[$i]['short_content'] = $row['short_content'];
-			$i++;
-		}
-
-		return $newsList;/**/
-		$adminInfo['name'] = "Name 12";
-		return $adminInfo;
-	}
+	
 	public static function getUsers(){
 		$db = Db::getConnection();
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -36,14 +17,9 @@ class Users
 			$usersList[$i]['Password'] = $row['Password'];
 			$i++;
 		}
-		foreach($usersList as $val) {
-			echo "<table border=1>";
-			foreach ($val as $k=>$v) {
-				echo "<tr><td>$k</td><td>$v</td></tr>";					
-			}
-			echo "</table>";
-		}
+		
 		$db = null;
+		return $usersList;
 	}
 	public static function addUser($name, $email, $password){
 	
@@ -51,6 +27,16 @@ class Users
 	 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	 $sql = $db->prepare("INSERT INTO users (Name, Email, Role, Password) VALUES (:name, :email, :role, :password)");
 	 $sql->execute(array(':name' => $name, ':email'=> $email, ':role'=> 1, ':password'=>md5(md5($password))));
+	 $result = $db->query('SELECT id, Name, Email, Role, Password FROM users ORDER BY id DESC LIMIT 1');
+	 while($row = $result->fetch()) {
+			$addedUser['id'] = $row['id'];
+			$addedUser['Name'] = $row['Name'];
+			$addedUser['Email'] = $row['Email'];
+			$addedUser['Role'] = $row['Role'];
+			$addedUser['Password'] = $row['Password'];
+			}
+			$db = null;
+			return $addedUser;
 	 
 	}
 	public static function editUser($id, $name, $email, $password){
