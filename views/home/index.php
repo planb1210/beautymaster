@@ -6,6 +6,7 @@
 		<link href="/template/css/styles.css" rel="stylesheet" type="text/css" media="screen" />
 		<link rel="stylesheet" href="/scripts/bootstrap/bootstrap.css" >
 		<link href="https://cdn.materialdesignicons.com/3.8.95/css/materialdesignicons.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="/template/css/kalendae.css" type="text/css" charset="utf-8">
 	</head>
 	<body>
 		<div class="container-header">
@@ -52,9 +53,9 @@
 						</div>
 						<div class="list-item" data-bind="visible: !isMasterModeUse()">
 							<div class="list-item-wrapper">
-								<h3>Выбор даты</h3>
+								<h3 data-bind="click:function() { if(isCalendarEnabled()){takeTimeMode()} }, style: { color: isCalendarEnabled() ? 'black' : 'gray' }">Выбор даты</h3>
 								<div>
-								календарь
+								календарь								
 								</div>
 							</div>
 						</div>
@@ -77,6 +78,18 @@
 							<div data-bind="visible: isSelectedMode, template: { name: template, foreach: skills }"></div>
 						<!-- /ko -->					
 					</div>
+					
+					<div data-bind="visible: isTimeModeUse">
+						<!-- ko with: timeModel -->
+							<div class="list-item-wrapper">
+								<h3 data-bind="click: changeMode">Выбор даты</h3>
+							</div>
+							rfktylfhm
+							<div id="cal"></div>
+						<!-- /ko -->					
+					</div>		
+					
+					
 				</div>
 			</div>
 		</div>
@@ -85,9 +98,11 @@
 		<script type="text/javascript" src="/scripts/knockout-3.5.0.js"></script>
 		<script type="text/javascript" src="/scripts/knockout-latest.debug.js"></script>
 		<script type="text/javascript" src="/scripts/koExternalTemplateEngine_all.js"></script>
+		<script type="text/javascript" src="/scripts/kalendae.standalone.js"></script>		
 		<script type="text/javascript" src="/scripts/models/home/baseBlock.js"></script>
 		<script type="text/javascript" src="/scripts/models/home/mastersBlock.js"></script>
 		<script type="text/javascript" src="/scripts/models/home/skillsBlock.js"></script>
+		<script type="text/javascript" src="/scripts/models/home/calendarBlock.js"></script>
 		<script type="text/javascript" src="/scripts/models/home/properties.js"></script>		
 		<script>
 			var viewModel = new PropertyModel();

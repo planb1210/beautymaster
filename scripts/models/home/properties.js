@@ -22,9 +22,22 @@ var PropertyModel = class {
 		});
 		
 		
+		this.timeModel = new CalendarBlock();
+		this.isTimeModeUse = ko.computed(function() {
+			return self.timeModel.isSelectedMode();
+		});
+		this.selectedTime = ko.computed(function() {
+			return self.timeModel.selectedItem();
+		});
+		
+		
 		this.isEmptyModeUse = ko.computed(function() {
 			return !self.isMasterModeUse() && !self.isSkillsModeUse();
-		});	
+		});
+		
+		this.isCalendarEnabled = ko.computed(function() {
+			return self.isEmptyModeUse() && self.selectedMaster()!=null && self.selectedSkill()!=null;
+		});	/**/
 	}
 	
 	takeMasterMode() {
@@ -45,6 +58,11 @@ var PropertyModel = class {
 	clearSelectedSkill() {
 		var self = this;
 		self.skillModel.clearSelectedItem();
+	}
+	
+	takeTimeMode() {
+		var self = this;
+		self.timeModel.viewCalendar(self.selectedMaster(), self.selectedSkill());
 	}
 };
 

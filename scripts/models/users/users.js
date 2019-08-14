@@ -6,8 +6,13 @@ var User = class {
 		this.id = ko.observable(item.id);
 		this.name = ko.observable(item.Name);
 		this.email = ko.observable(item.Email);
-		this.password = ko.observable(item.Password)
-		this.role = ko.observable(item.Role)
+		this.password = ko.observable(item.Password);
+		this.role = ko.observable(item.Role);
+		this.editMode = ko.observable(false);
+	}
+	
+	toggleMode(){
+		this.editMode(!this.editMode());
 	}
 };
 
@@ -17,7 +22,7 @@ var UsersModel = class {
 		this.users = ko.observableArray([]);
 		this.getUsersUrl = "/users/GetUsers";
 		this.deleteUsersUrl = "/users/deleteUser";
-	    	this.addUsersUrl = "/users/addUser"
+		this.addUsersUrl = "/users/addUser";
 		
 		this.viewUsers();
 				
@@ -33,6 +38,10 @@ var UsersModel = class {
 				});
 			});
 		}
+		
+	}
+	
+	editMode(Id){
 		
 	}
 	

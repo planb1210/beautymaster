@@ -14,32 +14,46 @@
 			<div class="content" >
 								
 				<table border=1>
-				<thead data-bind="visible: users().length > 0">
-				<tr>
-				<td>Id</td>
-				<td data-bind"text: name">Имя</td>
-				<td data-bind"text: email">Email</td>
-				<td data-bind"text: role">Права</td>
-				</tr>
-				</thead>
-				<tbody  data-bind="foreach: users">
-				<tr>
-				<td data-bind="text: id"></td>
-				<td data-bind="text: name"></td>
-				<td data-bind="text: email"></td>
-				<td data-bind="text: role"></td>
-				<td>
-				<input data-bind="click:function(data) { $parent.deleteUser(data.id())}" type="submit" value="Удалить" name="submit"/>
-				</td>
-				</tr>
-				</tbody>
+					<thead data-bind="visible: users().length > 0">
+						<tr>
+							<td>Id</td>
+							<td data-bind"text: name">Имя</td>
+							<td data-bind"text: email">Email</td>
+							<td data-bind"text: role">Права</td>
+						</tr>
+					</thead>
+					<tbody data-bind="foreach: users">
+						<tr>
+							<!-- ko if: !editMode() -->
+							<td data-bind="text: id"></td>
+							<td data-bind="text: name"></td>
+							<td data-bind="text: email"></td>
+							<td data-bind="text: role"></td>
+							<!-- /ko -->
+							<!-- ko if: editMode() -->
+							<td><input type=text name=name data-bind="value: id"/></td>
+							<td><input type=text name=name data-bind="value: name"/></td>
+							<td><input type=text name=name data-bind="value: email"/></td>
+							<td><input type=text name=name data-bind="value: role"/></td>
+							<!-- /ko -->
+							<td>
+								<input data-bind="click:function(data) { $parent.deleteUser(data.id())}" type="submit" value="Удалить" name="submit"/>
+								<!-- ko if: !editMode() -->
+									<input data-bind="click:function(data) { toggleMode()}" type="submit" value="Изменить" name="submit"/>
+								<!-- /ko -->
+								<!-- ko if: editMode() -->
+									<input data-bind="click:function(data) { $parent.save(data.id())}" type="submit" value="Сохранить" name="submit"/>
+								<!-- /ko -->
+							</td>
+						</tr>
+					</tbody>
 				</table>
 				<input  type="submit" value="Добавить пользователя" onclick="$('#add').toggle();"/>
 				<form id="add" style="display: none;" data-bind="submit:addUser">
 					<table border=1>
-						<tr><td>Имя</td><td><input type=text name=name size=10</td></tr>
-						<tr><td>email</td><td><input type=text name=email size=10></td></tr>
-						<tr><td>Пароль</td><td><input type=password name=password size=10></td></tr>
+						<tr><td>Имя</td><td><input type=text name=name size=10/></td></tr>
+						<tr><td>email</td><td><input type=text name=email size=10/></td></tr>
+						<tr><td>Пароль</td><td><input type=password name=password size=10/></td></tr>
 					</table>
 					<input type=submit  value="Создать" name="submit">
 				</form>
@@ -80,9 +94,9 @@
 		</div>
 		<?php echo $this->footer; ?>
 		<script>
-                     let viewModel = new UsersModel();
-                     ko.applyBindings(viewModel);</script>
-		
+			 let viewModel = new UsersModel();
+			 ko.applyBindings(viewModel);
+		</script>		
 	</body>
 </html>
 	
