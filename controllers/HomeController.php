@@ -40,4 +40,18 @@ class HomeController {
 		echo json_encode($skills, JSON_UNESCAPED_UNICODE);
 		return true;
 	}
+	
+	public function actionGetSchedule()
+	{
+		if(isset($_POST['employeeId'])){
+			$currentMonth = date('m');
+			$currentYeahr = date('y');
+			$schedule = Home::getSchedule($_POST['employeeId'], $currentYeahr, $currentMonth);
+			echo json_encode($schedule, JSON_UNESCAPED_UNICODE);
+		}
+		else{
+			echo null;
+		}
+		return true;
+	}
 }

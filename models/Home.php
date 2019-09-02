@@ -41,5 +41,19 @@ class Home
 			$result = $db->query($sqlText);
 		}
 		return $result->fetchAll(PDO::FETCH_CLASS);		
+	}
+
+	public static function getSchedule($employeeId, $yeahr, $month){
+		$db = Db::getConnection();
+		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);		
+
+		$sqlText = "select Yeahr, Month, Days from schedule 
+					where EmployeeId = :employeeId 
+					AND Month >= :month
+					AND Yeahr >= :yeahr";
+		$result = $db->prepare($sqlText);
+		$result->execute(array(':employeeId' => $employeeId, ':yeahr' => $yeahr, ':month' => $month));		
+
+		return $result->fetchAll(PDO::FETCH_CLASS);		
 	}	
 }
