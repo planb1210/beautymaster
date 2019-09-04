@@ -12,4 +12,5 @@ return array(
 	'home/GetMasters' => 'home/GetMasters',
 	'home/GetSkills' => 'home/GetSkills',
 	'home/GetSchedule' => 'home/GetSchedule',
+	'home/GetClientTimeBooking' => 'home/GetClientTimeBooking',
 	'home' => 'home/index'	);

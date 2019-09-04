@@ -55,5 +55,19 @@ class Home
 		$result->execute(array(':employeeId' => $employeeId, ':yeahr' => $yeahr, ':month' => $month));		
 
 		return $result->fetchAll(PDO::FETCH_CLASS);		
+	}
+
+	public static function getClientTimeBooking($employeId, $time){
+		$db = Db::getConnection();
+		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);		
+
+		$sqlText = "select Duration, BookingTime from clientsBooking cb
+					left join services s on s.Id = cb.ServiceId
+					where cb.EmployeId = :employeId 
+					AND date(cb.BookingTime) = :bookingtime";
+		$result = $db->prepare($sqlText);
+		$result->execute(array(':employeId' => $employeId, ':bookingtime' => $time));		
+
+		return $result->fetchAll(PDO::FETCH_CLASS);		
 	}	
 }

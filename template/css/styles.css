@@ -98,4 +98,38 @@ body {
 	font-size: 24px;
     line-height: 28px;
 }
+/*------------------------time----------------------------*/
+.time-slot-wrapper{
+    width: 25%;
+    box-sizing: border-box;
+    padding: 8px;
+    /*display: inline-block;/**/
+}
+.time-slot {
+    /*background-color: #fff!important;/**/
+    color: #302f2f!important;
+    width: 100%;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0 0 -4px;
+    line-height: 36px;
+    min-height: 36px;
+    white-space: nowrap;
+    min-width: 88px;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 14px;
+    text-decoration: none;
+    cursor: pointer;
+    overflow: hidden;
+    padding: 0 6px;
+    position: relative;
+    outline: 0;
+    letter-spacing: .01em;
+    border-radius: 3px;
+    border: 0;
+    display: inline-block;
+    vertical-align: baseline;
+}
 

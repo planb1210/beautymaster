@@ -5,7 +5,13 @@ infuser.defaults.templateUrl = "/views/home/templates/";
 class CalendarBlock extends BaseBlock {	
     constructor() {
 		super();
+		var self = this;
 		this.getScheduleUrl = "/home/GetSchedule";
+		this.getClientTimeBookingUrl = "/home/GetClientTimeBooking";		
+		this.availableTimeBlocks = ko.observableArray([]);
+		this.showAvailableTimeBlocks = ko.computed(function() {
+			return self.availableTimeBlocks().length > 0;
+		});
 	}
 	
 	viewCalendar(master, skill) {
@@ -21,9 +27,9 @@ class CalendarBlock extends BaseBlock {
 				$("#cal").html("");
 				new Kalendae({
 					attachTo:"cal",
-					months:3,
+					months:1,
 					direction:'today-future',
-					mode:'multiple',
+					mode:'single',
 					dayHeaderClickable: true,
 					blackout: function (date) {
 						var result = 1;
@@ -35,10 +41,35 @@ class CalendarBlock extends BaseBlock {
 							}
 						});
 						return result;
+					},
+					subscribe: {
+						'change': function (date) {
+							self.getTimeBooking(this.getSelected(), master, skill);
+						}
 					}
 				});
 			}
 		});
+	}
+	
+	getTimeBooking(date, master, skill) {
+		var self = this;
+		//self.availableTimeBlocks(self.getTimeBlocks());
+		var data = { employeeId: master.id(), time: date };
+		$.post(self.getClientTimeBookingUrl, data)
+		.done(function(result) {
+			var rows = JSON.parse(result);			
+			if(rows.length>0){
+				var test = new Date(rows[0].BookingTime);
+				console.log(test);
+			}
+		});
+	}
+	
+	getTimeBlocks(){
+		var self = this;
+		var times = [{time: "10:00"}, {time: "10:30"}, {time: "11:00"}];
+		return times;
 	}
 	
 	parseCalendarData(calendarData) {
@@ -52,6 +83,12 @@ class CalendarBlock extends BaseBlock {
 			});
 		});
 		return resultDays;
+	}
+	
+	changeMode() {
+		var self = this;
+		self.isSelectedMode(!self.isSelectedMode());
+		self.availableTimeBlocks([]);
 	}
 };
 

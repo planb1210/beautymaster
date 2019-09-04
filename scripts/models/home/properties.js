@@ -37,7 +37,7 @@ var PropertyModel = class {
 		
 		this.isCalendarEnabled = ko.computed(function() {
 			return self.isEmptyModeUse() && self.selectedMaster()!=null && self.selectedSkill()!=null;
-		});	/**/
+		});
 	}
 	
 	takeMasterMode() {

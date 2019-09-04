@@ -54,4 +54,16 @@ class HomeController {
 		}
 		return true;
 	}
+	
+	public function actionGetClientTimeBooking()
+	{
+		if(isset($_POST['employeeId']) && isset($_POST['time'])){
+			$clientTimeBooking = Home::getClientTimeBooking($_POST['employeeId'], $_POST['time']);
+			echo json_encode($clientTimeBooking, JSON_UNESCAPED_UNICODE);
+		}
+		else{
+			echo null;
+		}
+		return true;
+	}	
 }
