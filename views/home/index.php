@@ -54,10 +54,18 @@
 						<div class="list-item" data-bind="visible: !isMasterModeUse()">
 							<div class="list-item-wrapper">
 								<h3 data-bind="click:function() { if(isCalendarEnabled()){takeTimeMode()} }, style: { color: isCalendarEnabled() ? 'black' : 'gray' }">Выбор даты</h3>
+								<!-- ko if: selectedTime -->
+									<div data-bind="text: selectedTime().showFullTime()"></div>
+								<!-- /ko -->
+								<!-- ko ifnot: selectedTime -->
 								<div>
 								календарь								
 								</div>
+								<!-- /ko -->
 							</div>
+							<!-- ko if: selectedTime -->
+								<i data-bind="click: clearSelectedTime" class="mdi y-icon remove-button mdi-close-circle-outline"></i>
+							<!-- /ko -->
 						</div>
 					<!-- /ko -->
 					
@@ -88,7 +96,7 @@
 							<!-- ko if: showAvailableTimeBlocks() -->							
 								<div data-bind="foreach: availableTimeBlocks">
 									<div class="time-slot-wrapper">
-										<button class="y-button y-button_transparent time-slot ng-binding" data-bind="text: showTime"></button>
+										<button class="y-button y-button_transparent time-slot ng-binding" data-bind="text: showTime, click:function(data) { $parent.selectItem(data) }"></button>
 									</div>
 								</div>
 							<!-- /ko -->

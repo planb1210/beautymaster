@@ -64,5 +64,10 @@ var PropertyModel = class {
 		var self = this;
 		self.timeModel.viewCalendar(self.selectedMaster(), self.selectedSkill());
 	}
+	
+	clearSelectedTime() {
+		var self = this;
+		self.timeModel.clearSelectedItem();
+	}
 };
 

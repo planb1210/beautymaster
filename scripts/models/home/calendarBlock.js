@@ -5,10 +5,16 @@ infuser.defaults.templateUrl = "/views/home/templates/";
 class TimePart {	
 	constructor(hour, minute) {
 		var self = this;
-		this.hour = hour;
-		this.minute = minute;
+		this.year = ko.observable();
+		this.month = ko.observable();
+		this.day = ko.observable();
+		this.hour = ko.observable(hour);
+		this.minute = ko.observable(minute);
 		this.showTime = ko.computed(function() {
-			return self.hour+":"+(self.minute == 0 ? "00" : self.minute);
+			return self.hour()+":"+(self.minute() == 0 ? "00" : self.minute());
+		});
+		this.showFullTime = ko.computed(function() {
+			return self.year()+"-"+self.month()+"-"+self.day()+" "+self.hour()+":"+(self.minute() == 0 ? "00" : self.minute());
 		});
 	}
 }
@@ -93,15 +99,28 @@ class CalendarBlock extends BaseBlock {
 		var data = { employeeId: master.id(), time: date };
 		$.post(self.getClientTimeBookingUrl, data)
 		.done(function(result) {
-			var rows = JSON.parse(result);		
+			var rows = JSON.parse(result);
+			var	timeBlocks = [];
 			if(skill.divisionId() == 1){
-				self.availableTimeBlocks(self.getBarberShopTimeParts(rows, skill.duration()));
+				timeBlocks = self.getBarberShopTimeParts(rows, skill.duration());
 			}
 			if(skill.divisionId() == 2){
-				self.availableTimeBlocks(self.getManicureTimeParts(rows, skill.duration()));
-			}			
+				timeBlocks = self.getManicureTimeParts(rows, skill.duration());
+			}
+			self.availableTimeBlocks(self.prepareTimePart(date, timeBlocks));
 		});
 	}
+	
+	prepareTimePart(date, parts) {
+		var result = parts.map(function(part) {
+			part.year(new Date(date).getFullYear());
+			part.month(new Date(date).getMonth()+1);
+			part.day(new Date(date).getDate());
+			return part;
+		});
+		return result;
+	}
+	
 	
 	getBarberShopTimeParts(rows, serviceDuration){
 		var self = this;
@@ -128,7 +147,7 @@ class CalendarBlock extends BaseBlock {
 		var result = [];
 		var stop = false;
 		parts.forEach(function(part) {
-			if(part.hour == lastTime.hour && part.minute == lastTime.minute){
+			if(part.hour() == lastTime.hour() && part.minute() == lastTime.minute()){
 				result.push(part);
 				stop = true;
 			}
@@ -145,15 +164,15 @@ class CalendarBlock extends BaseBlock {
 		var duration = new Number(bookingObj.Duration);
 		var firstTime = new TimePart(hour-serviceDuration, minute);
 		var lastTime = new TimePart(hour+duration, minute);
-		var stop = firstTime.hour<parts[0].hour ? true : false;
+		var stop = firstTime.hour()<parts[0].hour() ? true : false;
 		var result = [];
 		
 		parts.forEach(function(part) {
-			if(part.hour == firstTime.hour && part.minute == firstTime.minute){
+			if(part.hour() == firstTime.hour() && part.minute() == firstTime.minute()){
 				result.push(part);
 				stop = true;
 			}
-			if(part.hour == lastTime.hour && part.minute == lastTime.minute){
+			if(part.hour() == lastTime.hour() && part.minute() == lastTime.minute()){
 				stop = false;
 			}
 			if(!stop){
