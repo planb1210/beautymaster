@@ -27,7 +27,7 @@ class Home
 		
 		if($id != null){
 			$sqlText = "select 
-					s.Id, s.Name, s.Price, s.Duration, s.Description
+					s.Id, s.Name, s.Price, s.Duration, s.Description, s.DivisionId
 					from skills sk
 					left join services s on sk.ServiceId = s.Id
 					where EmployeeId = :id";

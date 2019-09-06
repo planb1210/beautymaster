@@ -9,7 +9,8 @@ var Skill = class {
 		this.name = ko.observable(data.Name);
 		this.price = ko.observable(data.Price);	
 		this.duration = ko.observable(data.Duration);	
-		this.description = ko.observable(data.Description);			
+		this.description = ko.observable(data.Description);
+		this.divisionId = ko.observable(data.DivisionId);
 	}
 };
 

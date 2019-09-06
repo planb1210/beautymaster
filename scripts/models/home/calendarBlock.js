@@ -2,6 +2,42 @@
 
 infuser.defaults.templateUrl = "/views/home/templates/";
 
+class TimePart {	
+	constructor(hour, minute) {
+		var self = this;
+		this.hour = hour;
+		this.minute = minute;
+		this.showTime = ko.computed(function() {
+			return self.hour+":"+(self.minute == 0 ? "00" : self.minute);
+		});
+	}
+}
+
+var barberShopTimeParts = [new TimePart(10,0), 
+				new TimePart(10,30),
+				new TimePart(11, 0),
+				new TimePart(11, 30),
+				new TimePart(12, 0),
+				new TimePart(12, 30),
+				new TimePart(13, 0),
+				new TimePart(13, 30),
+				new TimePart(14, 0),
+				new TimePart(14, 30),
+				new TimePart(15, 0),
+				new TimePart(15, 30),
+				new TimePart(16, 0),
+				new TimePart(16, 30),
+				new TimePart(17, 0),
+				new TimePart(17, 30),
+				new TimePart(18, 0),
+				new TimePart(18, 30)];
+				
+var manicureTimeParts = [new TimePart(10,0), 
+				new TimePart(12, 30),
+				new TimePart(14, 30),
+				new TimePart(16, 30),
+				new TimePart(18, 30)];
+
 class CalendarBlock extends BaseBlock {	
     constructor() {
 		super();
@@ -54,22 +90,77 @@ class CalendarBlock extends BaseBlock {
 	
 	getTimeBooking(date, master, skill) {
 		var self = this;
-		//self.availableTimeBlocks(self.getTimeBlocks());
 		var data = { employeeId: master.id(), time: date };
 		$.post(self.getClientTimeBookingUrl, data)
 		.done(function(result) {
-			var rows = JSON.parse(result);			
-			if(rows.length>0){
-				var test = new Date(rows[0].BookingTime);
-				console.log(test);
+			var rows = JSON.parse(result);		
+			if(skill.divisionId() == 1){
+				self.availableTimeBlocks(self.getBarberShopTimeParts(rows, skill.duration()));
 			}
+			if(skill.divisionId() == 2){
+				self.availableTimeBlocks(self.getManicureTimeParts(rows, skill.duration()));
+			}			
 		});
 	}
 	
-	getTimeBlocks(){
+	getBarberShopTimeParts(rows, serviceDuration){
 		var self = this;
-		var times = [{time: "10:00"}, {time: "10:30"}, {time: "11:00"}];
-		return times;
+		var result = self.prepareLastTime(barberShopTimeParts, serviceDuration);		
+		
+		rows.forEach(function(row) {
+			result = self.getTimePart(result, row, serviceDuration);			
+		});		
+		return result;
+	}
+	
+	getManicureTimeParts(rows, serviceDuration){
+		var self = this;
+		var result = manicureTimeParts;		
+		
+		rows.forEach(function(row) {
+			result = self.getTimePart(result, row, serviceDuration);			
+		});		
+		return result;
+	}
+	
+	prepareLastTime(parts, serviceDuration){
+		var lastTime = new TimePart(19 - serviceDuration,0);
+		var result = [];
+		var stop = false;
+		parts.forEach(function(part) {
+			if(part.hour == lastTime.hour && part.minute == lastTime.minute){
+				result.push(part);
+				stop = true;
+			}
+			if(!stop){
+				result.push(part);
+			}
+		});
+		return result;
+	}
+	
+	getTimePart(parts, bookingObj, serviceDuration){
+		var hour = new Number(new Date(bookingObj.BookingTime).getHours());
+		var minute = new Number(new Date(bookingObj.BookingTime).getMinutes());
+		var duration = new Number(bookingObj.Duration);
+		var firstTime = new TimePart(hour-serviceDuration, minute);
+		var lastTime = new TimePart(hour+duration, minute);
+		var stop = firstTime.hour<parts[0].hour ? true : false;
+		var result = [];
+		
+		parts.forEach(function(part) {
+			if(part.hour == firstTime.hour && part.minute == firstTime.minute){
+				result.push(part);
+				stop = true;
+			}
+			if(part.hour == lastTime.hour && part.minute == lastTime.minute){
+				stop = false;
+			}
+			if(!stop){
+				result.push(part);
+			}
+		});
+		return result;
 	}
 	
 	parseCalendarData(calendarData) {

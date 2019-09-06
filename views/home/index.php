@@ -88,7 +88,7 @@
 							<!-- ko if: showAvailableTimeBlocks() -->							
 								<div data-bind="foreach: availableTimeBlocks">
 									<div class="time-slot-wrapper">
-										<button class="y-button y-button_transparent time-slot ng-binding" data-bind="text: time"></button>
+										<button class="y-button y-button_transparent time-slot ng-binding" data-bind="text: showTime"></button>
 									</div>
 								</div>
 							<!-- /ko -->
