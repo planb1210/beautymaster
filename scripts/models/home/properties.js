@@ -32,11 +32,15 @@ var PropertyModel = class {
 		
 		
 		this.isEmptyModeUse = ko.computed(function() {
-			return !self.isMasterModeUse() && !self.isSkillsModeUse();
+			return !self.isMasterModeUse() && !self.isSkillsModeUse() && !self.isTimeModeUse();
 		});
 		
 		this.isCalendarEnabled = ko.computed(function() {
 			return self.isEmptyModeUse() && self.selectedMaster()!=null && self.selectedSkill()!=null;
+		});
+		
+		this.canBooking = ko.computed(function() {
+			return self.isCalendarEnabled() && self.selectedTime()!=null;
 		});
 	}
 	

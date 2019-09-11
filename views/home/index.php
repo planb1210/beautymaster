@@ -67,6 +67,9 @@
 								<i data-bind="click: clearSelectedTime" class="mdi y-icon remove-button mdi-close-circle-outline"></i>
 							<!-- /ko -->
 						</div>
+						<div class="button-block list-item" data-bind="visible: !isMasterModeUse()">
+							<button class="button-item" data-bind="click:function() { if(canBooking()){console.log(123)}}, css: { 'button-enable': canBooking, 'button-disable': !canBooking() }">Записаться на услугу</button>
+						</div>
 					<!-- /ko -->
 					
 					<div data-bind="visible: isMasterModeUse">
@@ -101,9 +104,7 @@
 								</div>
 							<!-- /ko -->
 						<!-- /ko -->					
-					</div>		
-					
-					
+					</div>
 				</div>
 			</div>
 		</div>
