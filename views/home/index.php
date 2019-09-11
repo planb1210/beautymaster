@@ -67,9 +67,21 @@
 								<i data-bind="click: clearSelectedTime" class="mdi y-icon remove-button mdi-close-circle-outline"></i>
 							<!-- /ko -->
 						</div>
-						<div class="button-block list-item" data-bind="visible: !isMasterModeUse()">
-							<button class="button-item" data-bind="click:function() { if(canBooking()){console.log(123)}}, css: { 'button-enable': canBooking, 'button-disable': !canBooking() }">Записаться на услугу</button>
-						</div>
+						<form method="post" action="/order">
+							<!-- ko if: selectedMaster -->
+								<input type="hidden" name="EmployeId" data-bind="value:selectedMaster().id()"/>
+							<!-- /ko -->
+							<!-- ko if: selectedSkill -->
+								<input type="hidden" name="SkillId" data-bind="value:selectedSkill().id()"/>
+							<!-- /ko -->
+							<!-- ko if: selectedTime -->
+								<input type="hidden" name="Time" data-bind="value:selectedTime().showFullTime()"/>
+							<!-- /ko -->
+							<div class="button-block list-item" data-bind="visible: !isMasterModeUse()">
+								<button class="button-item" type="submit" data-bind="css: { 'button-enable': canBooking, 'button-disable': !canBooking() }">Записаться на услугу</button>
+							</div>
+						</form>
+						
 					<!-- /ko -->
 					
 					<div data-bind="visible: isMasterModeUse">

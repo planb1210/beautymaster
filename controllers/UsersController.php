@@ -7,14 +7,12 @@ class UsersController extends AdminController{
 
 	public function actionIndex()
 	{		
-		//$this->CheckPermissions();
+		$this->CheckPermissions();
 		$this->AddPartials();
 				
 		require_once(ROOT . '/views/users/index.php');
 				
 		return true;
-		
-		
 	}
 	
 	public function actionEdit(){
