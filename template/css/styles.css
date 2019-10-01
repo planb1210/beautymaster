@@ -156,4 +156,17 @@ body {
     color: #fff;
     border: 1px solid rgb(192,250,255);
 }
-
+/*---------------------booking part--------------------------------*/
+form input{
+    order: 2;
+    display: block;
+    margin-top: auto;
+    background: 0 0;
+    border-width: 0 0 1px;
+    border-style: none none solid;
+    line-height: 26px;
+    -ms-flex-preferred-size: 26px;
+    border-radius: 0;
+    /* padding: 2px 2px 1px; */
+    padding: 2px 2px 1px;
+}

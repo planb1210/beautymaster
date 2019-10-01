@@ -42,6 +42,8 @@ var PropertyModel = class {
 		this.canBooking = ko.computed(function() {
 			return self.isCalendarEnabled() && self.selectedTime()!=null;
 		});
+		
+		this.isBookingModeUse = ko.observable(false);
 	}
 	
 	takeMasterMode() {
@@ -72,6 +74,13 @@ var PropertyModel = class {
 	clearSelectedTime() {
 		var self = this;
 		self.timeModel.clearSelectedItem();
+	}
+	
+	takeBookingMode() {
+		var self = this;
+
+		self.bookingModel = new BookingModel(self.selectedMaster(), self.selectedSkill(), self.selectedTime().showFullTime());
+		self.isBookingModeUse(!self.isBookingModeUse());
 	}
 };
 

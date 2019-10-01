@@ -23,5 +23,4 @@ return array(
 	'profile/GetUsers' => 'profile/GetUsers',
 	'profile/DeleteSkill' => 'profile/Edit',
 	'profile/ViewSkillsToAdd' => 'profile/Edit',
-	'profile/AddSkill' => 'profile/Edit',
-	'order' => 'order/index');
+	'profile/AddSkill' => 'profile/Edit');
