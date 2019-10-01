@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80011
 File Encoding         : 65001
 
-Date: 2019-07-24 22:01:52
+Date: 2019-10-01 11:57:45
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -24,11 +24,4 @@ CREATE TABLE `skills` (
   `EmployeeId` int(11) DEFAULT NULL,
   `ServiceId` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- ----------------------------
--- Records of skills
--- ----------------------------
-INSERT INTO `skills` VALUES ('1', '2', '1');
-INSERT INTO `skills` VALUES ('2', '2', '2');
-INSERT INTO `skills` VALUES ('3', '3', '3');
 SET FOREIGN_KEY_CHECKS=1;

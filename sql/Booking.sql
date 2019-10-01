@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80011
 File Encoding         : 65001
 
-Date: 2019-07-24 22:02:29
+Date: 2019-10-01 11:56:58
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -26,9 +26,4 @@ CREATE TABLE `booking` (
   `BookingDate` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- ----------------------------
--- Records of booking
--- ----------------------------
-INSERT INTO `booking` VALUES ('1', '2', '1', '2019-07-25 22:00:00');
 SET FOREIGN_KEY_CHECKS=1;

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80011
 File Encoding         : 65001
 
-Date: 2019-07-24 22:02:01
+Date: 2019-10-01 11:57:31
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -20,15 +20,11 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `schedule`;
 CREATE TABLE `schedule` (
-  `Id` int(11) DEFAULT NULL,
-  `Yeahr` int(11) DEFAULT NULL,
-  `Month` int(11) DEFAULT NULL,
+  `Id` int(11) NOT NULL,
+  `Yeahr` varchar(11) DEFAULT NULL,
+  `Month` varchar(11) DEFAULT NULL,
   `EmployeeId` int(11) DEFAULT NULL,
-  `Days` varchar(255) DEFAULT NULL
+  `Days` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- ----------------------------
--- Records of schedule
--- ----------------------------
-INSERT INTO `schedule` VALUES ('1', '2019', '7', '2', '1;2;5;6;9;10;11;13;14');
 SET FOREIGN_KEY_CHECKS=1;
