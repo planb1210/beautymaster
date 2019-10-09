@@ -65,5 +65,17 @@ class HomeController {
 			echo null;
 		}
 		return true;
+	}
+
+	public function actionGetClient()
+	{
+		if(isset($_POST['phone'])){
+			$client = Home::getClient($_POST['phone']);
+			echo json_encode($client, JSON_UNESCAPED_UNICODE);
+		}
+		else{
+			echo null;
+		}
+		return true;
 	}	
 }

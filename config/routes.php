@@ -18,6 +18,7 @@ return array(
 	'home/GetSkills' => 'home/GetSkills',
 	'home/GetSchedule' => 'home/GetSchedule',
 	'home/GetClientTimeBooking' => 'home/GetClientTimeBooking',
+	'home/GetClient' => 'home/GetClient',
 	'home' => 'home/index',
 	'profile/([0-9]+)' => 'profile/index/$1',
 	'profile/GetUsers' => 'profile/GetUsers',

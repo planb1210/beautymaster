@@ -69,5 +69,17 @@ class Home
 		$result->execute(array(':employeId' => $employeId, ':bookingtime' => $time));		
 
 		return $result->fetchAll(PDO::FETCH_CLASS);		
+	}
+
+	public static function getClient($phone){
+		$db = Db::getConnection();
+		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);		
+
+		$sqlText = "select Name, Phone, Email from clients cl
+					where cl.Phone = :phone";
+		$result = $db->prepare($sqlText);
+		$result->execute(array(':phone' => $phone));		
+
+		return $result->fetchAll(PDO::FETCH_CLASS);		
 	}	
 }

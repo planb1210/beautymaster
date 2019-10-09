@@ -127,28 +127,33 @@
 								<span data-bind="text: selectedTime().showFullTime()"></span>
 							</div>
 						</div>
-
-						<form name="orderForm" novalidate="novalidate" method="post" autocomplete="false" class="order-form">						
-							<div class="name block_item">
-								<label class="ng-binding" for="record_name">Имя</label>
-								<input tabindex="1" name="name" autocomplete="false" id="record_name" class="name-input online_booking_record" required="required"/>							
-							</div>
-							<div class="email block_item">
-								<label class="ng-binding" for="record_email">Email</label>
-								<input tabindex="4" name="email" autocomplete="false" id="record_email" class="online_booking_record" type="email"/>
-							</div>
+						
+						<!-- ko with: bookingModel -->
+							<form name="orderForm" novalidate="novalidate" method="post" autocomplete="false" class="order-form">
+								<div class="Phone block_item">
+									<label class="ng-binding" for="record_email">Номер телефона(пример +79201234567)</label>
+									<input data-bind="value: phone, valueUpdate:'afterkeydown'" maxlength="12" style="display: inline" type="tel" name="tel" />
+									<span data-bind="visible: isPhoneErrorVisible, text:phoneMessage"></span>
+								</div>	
+								
+								<div class="name block_item">
+									<label class="ng-binding" for="record_name">Имя</label>
+									<input tabindex="1" data-bind="value: name, valueUpdate:'afterkeydown'" style="display: inline" />							
+								</div>
+								
+								<div class="email block_item">
+									<label class="ng-binding" for="record_email">Email</label>
+									<input data-bind="value: email, valueUpdate:'afterkeydown'" style="display: inline" name="email"/>									
+									<span data-bind="visible: isEmailErrorVisible, text:emailMessage"></span>
+								</div>
 							
-							<div class="Phone block_item">
-								<label class="ng-binding" for="record_email">Номер телефона</label>
-								<input type="tel" name="tel" pattern="2[0-9]{3}-[0-9]{3}" />
-							</div>						
-							
-							<div class="comment block_item">
-								<label class="ng-binding ng-scope" for="record_comment">Комментарий к записи</label>							
-								<textarea name="comment" id="record_comment" class="online_booking_record" tabindex="5" columns="1" maxlength="150" rows="1" style="height: 30px;"></textarea>
-							</div>
-							<button><span class="ng-binding">Записаться</span></button>
-						</form>			
+								<div class="comment block_item">
+									<label class="ng-binding ng-scope" for="record_comment">Комментарий к записи</label>							
+									<textarea name="comment" id="record_comment" class="online_booking_record" tabindex="5" columns="1" maxlength="150" rows="1" style="height: 30px;"></textarea>
+								</div>
+								<button><span class="ng-binding">Записаться</span></button>
+							</form>	
+						<!-- /ko -->
 			
 					<!-- /ko -->
 				</div>
@@ -166,9 +171,12 @@
 		<script type="text/javascript" src="/scripts/models/home/calendarBlock.js"></script>
 		<script type="text/javascript" src="/scripts/models/home/booking.js"></script>	
 		<script type="text/javascript" src="/scripts/models/home/properties.js"></script>		
-		<script>
-			var viewModel = new PropertyModel();
-			ko.applyBindings(viewModel);/**/
+		<script>		
+            $(function()
+            {
+				var viewModel = new PropertyModel();
+				ko.applyBindings(viewModel);
+            });
 		</script>
 	</body>
 </html>
