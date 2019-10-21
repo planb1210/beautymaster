@@ -57,16 +57,16 @@ class Home
 		return $result->fetchAll(PDO::FETCH_CLASS);		
 	}
 
-	public static function getClientTimeBooking($employeId, $time){
+	public static function getClientTimeBooking($employeeId, $time){
 		$db = Db::getConnection();
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);		
 
-		$sqlText = "select Duration, BookingTime from clientsBooking cb
+		$sqlText = "select Duration, BookingTime from booking cb
 					left join services s on s.Id = cb.ServiceId
-					where cb.EmployeId = :employeId 
+					where cb.EmployeeId = :employeeId 
 					AND date(cb.BookingTime) = :bookingtime";
 		$result = $db->prepare($sqlText);
-		$result->execute(array(':employeId' => $employeId, ':bookingtime' => $time));		
+		$result->execute(array(':employeeId' => $employeeId, ':bookingtime' => $time));		
 
 		return $result->fetchAll(PDO::FETCH_CLASS);		
 	}
@@ -75,11 +75,46 @@ class Home
 		$db = Db::getConnection();
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);		
 
-		$sqlText = "select Name, Phone, Email from clients cl
+		$sqlText = "select Id, Name, Phone, Email from clients cl
 					where cl.Phone = :phone";
 		$result = $db->prepare($sqlText);
 		$result->execute(array(':phone' => $phone));		
 
 		return $result->fetchAll(PDO::FETCH_CLASS);		
+	}
+	
+	public static function booking($phone, $email, $name, $employeeId, $serviceId, $fullTime, $comment){
+		$db = Db::getConnection();
+		try {			
+			$db->beginTransaction();
+			$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);		
+			
+			$client = self::getClient($phone);
+			$clientId = 0;
+			if(empty($client)){
+				$sqlText = "INSERT INTO clients (Name, Phone, Email) VALUES (:name, :phone, :email)";
+			
+				$result = $db->prepare($sqlText);
+				$result->execute(array(':phone' => $phone, ':email' => $email, ':name' => $name));
+				
+				$result = $db->prepare('SELECT Id FROM clients WHERE Phone = :phone LIMIT 1');
+				$result->execute(array(':phone' => $phone));
+				
+				$clientId = $result->fetch(PDO::FETCH_OBJ)->Id;
+			}
+			else{
+				$clientId = $client[0]->Id;
+			}
+
+			$sqlText = "INSERT INTO booking (EmployeeId, ServiceId, ClientId, BookingTime, Comment) VALUES (:employeeId, :serviceId, :clientId, :bookingTime, :comment)";			
+			$result = $db->prepare($sqlText);
+			$result->execute(array(':employeeId' => $employeeId, ':serviceId' => $serviceId, ':clientId' => $clientId, ':bookingTime' => $fullTime , ':comment' => $comment ));
+			
+			$db->commit();
+			return true;
+		} catch (Exception $e) {
+			$db->rollback();
+			return false;
+		}				
 	}	
 }
