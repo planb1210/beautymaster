@@ -10,7 +10,7 @@
 	</head>
 	<body>
 		<div class="container-header">
-			<span class="logo">BeautyMaster</span>
+			<div class="logo">BeautyMaster</div>
 		</div>
 		<div class="container-wrapper container">
 			<div class="top-content">

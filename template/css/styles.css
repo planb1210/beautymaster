@@ -18,8 +18,8 @@ body {
 }
 
 .logo {
-	left: 50%;
-	position: absolute;
+	width: 100px;
+    margin: 0 auto;
 }
 
 .top-content{

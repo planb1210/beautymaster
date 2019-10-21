@@ -1,0 +1,29 @@
+/*--------------------menu---------------------*/
+ul li {
+	list-style-type: none !important;
+}
+
+.menu {
+	width: 100%;
+	padding: 10px 10px 10px 10px !important;
+}
+
+.menu ul{
+	width: 100%;
+    padding: 5px 5px 5px 5px !important;
+}
+
+.menu ul li{
+ 	float: left;
+	margin: 0 5px 10px 5px;	
+}
+
+.menu ul li a{
+	color:white!important;
+	text-decoration:none;
+}
+
+.menu ul li a:hover{
+	text-decoration:underline;
+}
+/*---------------------------------------------*/
