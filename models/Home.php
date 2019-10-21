@@ -64,7 +64,8 @@ class Home
 		$sqlText = "select Duration, BookingTime from booking cb
 					left join services s on s.Id = cb.ServiceId
 					where cb.EmployeeId = :employeeId 
-					AND date(cb.BookingTime) = :bookingtime";
+					AND date(cb.BookingTime) = :bookingtime
+					order by cb.BookingTime";
 		$result = $db->prepare($sqlText);
 		$result->execute(array(':employeeId' => $employeeId, ':bookingtime' => $time));		
 

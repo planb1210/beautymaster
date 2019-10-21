@@ -80,22 +80,16 @@ class HomeController {
 	}
 	
 	public function actionBooking(){
+		$result = null;
 		if(isset($_POST['phone']) && isset($_POST['email']) && isset($_POST['name']) && isset($_POST['masterId']) && isset($_POST['skillId']) && isset($_POST['fullTime'])){
 			$comment = isset($_POST['comment']) ? $_POST['comment'] : ""; 
 			$bookingResult = Home::booking($_POST['phone'], $_POST['email'], $_POST['name'], $_POST['masterId'], $_POST['skillId'], $_POST['fullTime'], $comment);
-			$result = null;
-			if($bookingResult){
-				$result = array( "Status" => true, "Text" => "Вы записаны");
-			}
-			else{
-				$result = array( "Status" => false, "Text" => "Не удалось записаться, попробуйте еще раз.");
-			}
-			echo json_encode($result, JSON_UNESCAPED_UNICODE);
-			return true;
+			$result = $bookingResult ? array( "Status" => 1, "Text" => "Вы записаны") : array( "Status" => 0, "Text" => "Не удалось записаться, попробуйте еще раз.");
 		}
 		else{
-			echo "Неизвестная ошибка";
+			$result = array( "Status" => 0, "Text" => "Неизвестная ошибка");
 		}
+		echo json_encode($result, JSON_UNESCAPED_UNICODE);
 		return true;
 	}
 }

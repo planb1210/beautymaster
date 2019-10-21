@@ -70,6 +70,9 @@ var BookingModel = class {
 		this.canBooking = ko.computed(function() {
 			return self.isPhoneValid() && self.isEmailValid() && self.name()!=undefined && self.name()!="";
 		});
+		this.isBookingFinish = ko.observable(false);
+		this.bookingStatus = ko.observable();
+		this.bookingText = ko.observable();
 	}
 	
 	booking() {
@@ -84,12 +87,13 @@ var BookingModel = class {
 				skillId: self.skill().id(),
 				fullTime: self.fullTime()
 				};
-				
-		console.log(data);
 		
 		$.post(self.bookingUrl, data)
 		.done(function(result) {
-			console.log(result);
+			var resultObj = JSON.parse(result);
+			self.bookingStatus(resultObj.Status);
+			self.bookingText(resultObj.Text);
+			self.isBookingFinish(true);
 		});
 	}
 };

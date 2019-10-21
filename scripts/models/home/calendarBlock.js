@@ -125,9 +125,8 @@ class CalendarBlock extends BaseBlock {
 	getBarberShopTimeParts(rows, serviceDuration){
 		var self = this;
 		var result = self.prepareLastTime(barberShopTimeParts, serviceDuration);		
-		
 		rows.forEach(function(row) {
-			result = self.getTimePart(result, row, serviceDuration);			
+			result = self.getTimePart(result, row, serviceDuration);
 		});		
 		return result;
 	}

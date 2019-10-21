@@ -128,32 +128,37 @@
 						</div>
 						
 						<!-- ko with: bookingModel -->
-							<form name="orderForm" method="post" class="order-form">
-								<div class="Phone block_item">
-									<label class="ng-binding" for="record_email">Номер телефона(пример +79201234567)</label>
-									<input data-bind="value: phone, valueUpdate:'afterkeydown'" maxlength="12" style="display: inline" type="tel" name="tel" />
-									<span data-bind="visible: isPhoneErrorVisible, text:phoneMessage"></span>
-								</div>	
+							<!-- ko if: isBookingFinish -->
+								<div data-bind="text: bookingText, css: { 'status_success': bookingStatus() == 1, 'status_error': bookingStatus() == 0 }"></div>
+							<!-- /ko -->
+							<!-- ko ifnot: isBookingFinish -->
+								<form name="orderForm" method="post" class="order-form">
+									<div class="Phone block_item">
+										<label class="ng-binding" for="record_email">Номер телефона(пример +79201234567)</label>
+										<input data-bind="value: phone, valueUpdate:'afterkeydown'" maxlength="12" style="display: inline" type="tel" name="tel" />
+										<span data-bind="visible: isPhoneErrorVisible, text:phoneMessage"></span>
+									</div>	
+									
+									<div class="name block_item">
+										<label class="ng-binding" for="record_name">Имя</label>
+										<input tabindex="1" data-bind="value: name, valueUpdate:'afterkeydown', enable: !isPhoneFind()" style="display: inline" />							
+									</div>
+									
+									<div class="email block_item">
+										<label class="ng-binding" for="record_email">Email</label>
+										<input data-bind="value: email, valueUpdate:'afterkeydown', enable: !isPhoneFind()" style="display: inline" name="email"/>									
+										<span data-bind="visible: isEmailErrorVisible, text:emailMessage"></span>
+									</div>
 								
-								<div class="name block_item">
-									<label class="ng-binding" for="record_name">Имя</label>
-									<input tabindex="1" data-bind="value: name, valueUpdate:'afterkeydown', enable: !isPhoneFind()" style="display: inline" />							
-								</div>
-								
-								<div class="email block_item">
-									<label class="ng-binding" for="record_email">Email</label>
-									<input data-bind="value: email, valueUpdate:'afterkeydown', enable: !isPhoneFind()" style="display: inline" name="email"/>									
-									<span data-bind="visible: isEmailErrorVisible, text:emailMessage"></span>
-								</div>
-							
-								<div class="comment block_item">
-									<label>Комментарий к записи</label>							
-									<textarea style="height: 30px;" data-bind="value: comment"></textarea>
-								</div>
-								<div class="button-block list-item" data-bind="">
-									<button class="button-item" type="submit" data-bind="click: function() {if(canBooking()){booking()}}, css: { 'button-enable': canBooking, 'button-disable': !canBooking() }">Записаться</button>
-								</div>	
-							</form>	
+									<div class="comment block_item">
+										<label>Комментарий к записи</label>							
+										<textarea style="height: 30px;" data-bind="value: comment"></textarea>
+									</div>
+									<div class="button-block list-item" data-bind="">
+										<button class="button-item" type="submit" data-bind="click: function() {if(canBooking()){booking()}}, css: { 'button-enable': canBooking, 'button-disable': !canBooking() }">Записаться</button>
+									</div>	
+								</form>	
+							<!-- /ko -->
 						<!-- /ko -->
 			
 					<!-- /ko -->
