@@ -60,7 +60,7 @@ var BookingModel = class {
 			}
 		});
 		this.isEmailErrorVisible = ko.computed(function() {
-			return self.email()!=undefined && !self.isEmailValid();
+			return (!self.isEmailValid() && self.email() != "" && self.email() != undefined);
 		});
 		//-----------------------------------------------------------------------------
 		this.name = ko.observable();
@@ -68,7 +68,7 @@ var BookingModel = class {
 		this.comment = ko.observable();
 		//-----------------------------------------------------------------------------
 		this.canBooking = ko.computed(function() {
-			return self.isPhoneValid() && self.isEmailValid() && self.name()!=undefined && self.name()!="";
+			return self.isPhoneValid() && !self.isEmailErrorVisible() && self.name()!=undefined && self.name()!="";
 		});
 		this.isBookingFinish = ko.observable(false);
 		this.bookingStatus = ko.observable();
