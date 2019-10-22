@@ -5,6 +5,7 @@
 				<li><a href="/admin">Главная Админка</a></li>
 				<li><a href="/users">Управление пользователями</a></li>
 				<li><a href="/services">Управление услугами</a></li>
+				<li><a href="/booking">Управление бронью</a></li>
 			</ul>
 		</div>
 	</div>

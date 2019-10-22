@@ -26,4 +26,38 @@ ul li {
 .menu ul li a:hover{
 	text-decoration:underline;
 }
+
+@media screen and (max-width: 768px) {
+	.top-content {
+		height: 200px;
+	}
+	
+	.mask-top-content {
+		display: flex;
+		display: -webkit-flex;
+		display: -moz-flex;
+		flex-direction: column;
+		-webkit-flex-direction: column;
+		-moz-flex-direction: column;
+	}
+		
+	.menu ul {
+		display: flex;
+		display: -webkit-flex;
+		display: -moz-flex;
+		flex-direction: column;
+		-webkit-flex-direction: column;
+		-moz-flex-direction: column;    
+
+		order: 1;
+		-webkit-order: 1;
+		-moz-flex-order: 1;  
+
+	}
+	.menu ul li {
+		flex: 1;
+		-webkit-flex: 1;
+		-moz-flex: 1;
+	}
+}
 /*---------------------------------------------*/

@@ -26,4 +26,5 @@ return array(
 	'profile/DeleteSkill' => 'profile/Edit',
 	'profile/ViewSkillsToAdd' => 'profile/Edit',
 	'profile/AddSkill' => 'profile/Edit',
-	'info' => 'info/index');
+	'info' => 'info/index',
+	'booking' => 'booking/index');
