@@ -14,7 +14,35 @@
 		<div class="container-wrapper container">
 			<?php echo $this->menu; ?>	
 			<div class="content">
-				booking
+				<!-- ko if: isBusy -->
+					<img src="/template/images/waiting.gif">
+				<!-- /ko -->
+				<!-- ko ifnot: isBusy -->
+					<div class="data_table">
+						<table>
+							<tr class="row header">
+								<th>Имя мастера</th>
+								<th>Имя клиента</th>
+								<th>Услуга</th>
+								<th>Цена</th>
+								<th>Длительность</th>
+								<th>Время записи</th>
+								<th>Комментарий клиента</th>
+							</tr>
+							<!-- ko foreach: items -->
+								<tr class="row">
+									<td data-bind="text:MasterName"></td>
+									<td data-bind="text:ClientName"></td>
+									<td data-bind="text:ServiceName"></td>
+									<td data-bind="text:Price"></td>
+									<td data-bind="text:Duration"></td>
+									<td data-bind="text:BookingTime"></td>
+									<td data-bind="text:Comment"></td>
+								</tr>
+							<!-- /ko -->
+						</table>
+					</div>
+				<!-- /ko -->
 			</div>
 		</div>
 		<?php echo $this->footer; ?>

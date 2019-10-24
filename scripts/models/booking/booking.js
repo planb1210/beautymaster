@@ -1,36 +1,35 @@
 "use strict";
 
-
 var BookingModel = class {
     constructor() {
 		var self = this;
-		this.users = ko.observableArray([]);
-		this.skills = ko.observableArray([]);
-		this.skillsToAdd = ko.observableArray([]);
-		this.skillsEmptyId=ko.observable();
-		this.emptyUserName=ko.computed(function(){ var b=self.users().find(function(it){return it.id()==self.skillsEmptyId()}); if (b!==undefined){return b.name()}});
-		this.skillArr = ko.computed(function(){var a=[];self.skills().forEach(function(el){a.push(el.skill())}); return a});
-		this.profileMode = ko.observable(false);
-		this.editSkillMode = ko.observable(false);
-		this.getUsersUrl = "/users/GetUsers";
-		this.deleteUsersUrl = "/users/deleteUser";
-		this.addUsersUrl = "/users/addUser";
-		
-		//this.viewUsers();
-				
+		this.itemsUrl = "/booking/GetRows";
+		this.items = ko.observableArray([]);
+		this.isBusy = ko.observable(true);
+		this.run();
 	}
 	
-	viewUsers() {
+	run() {
 		var self = this;
-		if(self.users().length<=0){
-			$.post(self.getUsersUrl)
-			.done(function(result) {
-					JSON.parse(result).forEach(function(item) {
-					self.users.push(new User(item));
-				});
-			});
-		}
+		self.isBusy(true);
 		
+		
+		/*data = { phone: self.phone(),
+			email:self.email(),
+			name: self.name(),
+			comment: self.comment(),
+			masterId:self.master().id(),
+			skillId: self.skill().id(),
+			fullTime: self.fullTime()
+			};/**/
+		
+		$.post(self.itemsUrl)//, data)
+		.done(function(result) {
+			var items = JSON.parse(result);
+			console.log(items);
+			self.items(items);
+			self.isBusy(false);
+		});
 	}
 }
 
