@@ -27,4 +27,5 @@ return array(
 	'profile/ViewSkillsToAdd' => 'profile/Edit',
 	'profile/AddSkill' => 'profile/Edit',
 	'info' => 'info/index',
+	'booking/GetRows' => 'booking/GetRows',
 	'booking' => 'booking/index');
