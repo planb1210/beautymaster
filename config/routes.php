@@ -7,6 +7,7 @@ return array(
 	'users/GetUsers' => 'users/GetUsers',
 	'users/deleteUser' => 'users/Edit',
 	'users/addUser' => 'users/Edit',
+	'users/editUser' => 'users/Edit',
 	'users' => 'users/index',
 	'services/GetServices' => 'services/GetServices',
 	'services/deleteService' => 'services/Edit',
