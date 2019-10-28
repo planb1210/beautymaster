@@ -14,8 +14,7 @@
 		<?php echo $this->head; ?>
 		<div class="container-wrapper container">
 			<?php echo $this->menu; ?>	
-			<div class="content">
-				<!-- ko if: !profileMode() -->			
+			<div class="content">							
 				<table border=1>
 					<thead data-bind="visible: users().length > 0">
 						<tr>
@@ -29,7 +28,7 @@
 						<tr>
 							<!-- ko if: !editMode() -->
 							<td data-bind="text: id"></td>
-							<td data-bind="text: name, click: function(data){$parent.viewProfile(data.id()); $root.profileMode(!$root.profileMode())}"></td>
+							<td data-bind="text: name, click: function(data){let id=data.id(); window.location.href=`/profile/${id}`}"<!--function(data){$parent.viewProfile(data.id()); $root.profileMode(!$root.profileMode())-->></td>
 							<td data-bind="text: email"></td>
 							<td data-bind="text: role"></td>
 							<!-- /ko -->
@@ -45,7 +44,7 @@
 									<input data-bind="click:function(data) { toggleMode()}" type="submit" value="Изменить" name="submit"/>
 								<!-- /ko -->
 								<!-- ko if: editMode() -->
-									<input data-bind="click:function(data) { $parent.save(data.id())}" type="submit" value="Сохранить" name="submit"/>
+									<input data-bind="click:function(data) { save(); toggleMode()}" type="submit" value="Сохранить" name="submit"/>
 								<!-- /ko -->
 							</td>
 						</tr>
@@ -58,49 +57,8 @@
 						<tr><td>email</td><td><input type=text name=email size=10/></td></tr>
 						<tr><td>Пароль</td><td><input type=password name=password size=10/></td></tr>
 					</table>
-					<input type=submit  value="Создать" name="submit">
-				</form>	
-				<!-- /ko -->
-				
-				<!-- ko if: profileMode() -->
-				<table border=1>
-					<thead data-bind="visible: skills().length > 0">
-						<tr">
-							<td>ID</td>
-							<td >Имя</td>
-							<td>Услуги</td>
-							<td>ID услуги</td>
-						</tr>
-					</thead>
-					<tbody data-bind="foreach: skills" >
-						<tr > 
-							<td data-bind="text: id"></td>
-							<td data-bind="text: name, click:function(){$root.profileMode(!$root.profileMode()); $root.skills.removeAll(), $root.skillsToAdd.removeAll()}"></td>							
-							<td data-bind="text: skill"></td>
-							<td data-bind="text: skillId"></td>							
-							<td><input data-bind="click:function(data) {$root.deleteSkill(data.id, data.skillId);$root.skillsToAdd.removeAll();$root.skillsEmptyId(data.id())}" type=submit value="Удалить"/></td> 
-							<td ><input type=submit  value="Добавить навык" data-bind="click:function(data) {$root.viewSkillsToAdd(data.id(), $root.skillArr());$root.editSkillMode(!$root.editSkillMode()); $root.skillsToAdd.removeAll()}"></td>
-						</tr>
-						
-						
-							<div data-bind="foreach:$root.skillsToAdd">
-								<!-- ko if: $root.editSkillMode() -->
-								<li data-bind="text:skill, click:function(data) {$root.addSkill($root.skills()[0].id(), data.skillId); $root.editSkillMode(!$root.editSkillMode())}"></li>
-								<!-- /ko -->
-							</div>
-						
-					</tbody>
-				</table>
-				<div data-bind="visible: skills().length == 0">
-				<span data-bind="text:emptyUserName"></span>
-				<input type=submit  value="Добавить навык" data-bind="click:function() {viewSkillsToAdd(skillsEmptyId(), new Array(1,2))}">
-				<div data-bind="foreach:$root.skillsToAdd">								
-								<li data-bind="text:skill, click:function(data) {$root.addSkill($root.skillsEmptyId(), data.skillId);}"></li>
-								
-				</div>
-				</div>
-				<!-- /ko -->
-				
+					<input type=submit  value="Создать" name="submit" onclick="$('#add').toggle();"/>
+				</form>							
 			</div>
 		</div>
 		<?php echo $this->footer; ?>

@@ -7,7 +7,7 @@ class Services
 		$db = Db::getConnection();
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		
-		if($id != null){			
+		if($id != null && $skillsArr != null){			
 			$total = count($skillsArr);
 			$quest_marks = array_fill(0,$total, '?');			
 			$sqlText = "select s.Name as Skill, s.Id as No from services s left join skills sk on s.Id=sk.ServiceId left join users u on sk.EmployeeId = u.Id where sk.EmployeeId IS NULL or (u.Id!=? and s.Name NOT IN(".implode(',',$quest_marks)."))";
@@ -16,9 +16,9 @@ class Services
 			return $result->fetchAll(PDO::FETCH_CLASS);
 		}
 		else{
-		$sqlText = "select s.Id, s.Name, s.Price, s.Duration, s.DivisionId, s.Description from services s";
-		$result = $db->query($sqlText);
-		return $result->fetchAll();
+			$sqlText = "select s.Id as No, s.Name as Skill, s.Price, s.Duration, s.DivisionId, s.Description from services s";
+			$result = $db->query($sqlText);
+			return $result->fetchAll();
 		}
 		
 	}

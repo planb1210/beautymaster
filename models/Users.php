@@ -12,12 +12,18 @@ class Users
 						where u.Id = :id";
 			$result = $db->prepare($sqlText);
 			$result->execute(array(':id' => $id));
+			if ($result->rowCount() == 0){				
+				$sqlText ="SELECT Id, Name, Email, Role, Password FROM users where Id = :id";
+				$result = $db->prepare($sqlText);
+				$result->execute(array(':id' => $id));
+				//return $result->fetchAll(PDO::FETCH_CLASS);
+			}
+			return $result->fetchAll(PDO::FETCH_CLASS);
 		}
 		else{
-			$result = $db->query('SELECT id, Name, Email, Role, Password FROM users ORDER BY id ASC');
-		}
-		
-		return $result->fetchAll(PDO::FETCH_CLASS);	
+			$result = $db->query('SELECT Id, Name, Email, Role, Password FROM users ORDER BY id ASC');
+			return $result->fetchAll(PDO::FETCH_CLASS);
+		}			
 	}
 		
 		
@@ -31,15 +37,7 @@ class Users
 	 $sql = $db->prepare("INSERT INTO users (Name, Email, Role, Password) VALUES (:name, :email, :role, :password)");
 	 $sql->execute(array(':name' => $name, ':email'=> $email, ':role'=> 1, ':password'=>md5(md5($password))));
 	 $result = $db->query('SELECT id, Name, Email, Role, Password FROM users ORDER BY id DESC LIMIT 1');
-	 while($row = $result->fetch()) {
-			$addedUser['id'] = $row['id'];
-			$addedUser['Name'] = $row['Name'];
-			$addedUser['Email'] = $row['Email'];
-			$addedUser['Role'] = $row['Role'];
-			$addedUser['Password'] = $row['Password'];
-			}
-			$db = null;
-			return $addedUser;
+	 return $result->fetchAll(PDO::FETCH_CLASS);
 	 
 	}
 	public static function editUser($id, $name, $email, $password){

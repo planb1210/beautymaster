@@ -3,8 +3,8 @@
 var Service = class {
     constructor(data) {
         var self = this;
-		this.id = ko.observable(data.Id);
-		this.name = ko.observable(data.Name);
+		this.id = ko.observable(data.No);
+		this.name = ko.observable(data.Skill);
 		this.price = ko.observable(data.Price);	
 		this.duration = ko.observable(data.Duration);	
 		this.divisionid = ko.observable(data.DivisionId);
@@ -18,11 +18,8 @@ var Service = class {
 	save(){
 		$.post("/services/editService", {id: this.id(),name:this.name(), price:this.price(), duration:this.duration(), divisionid:this.divisionid(), description:this.description(), submit:'Редактировать'})
 			.done(function(result) {
-					//JSON.parse(result).forEach(function(item){
-					//self.services.push(new Service(item));
 					alert('Изменения сохранены');
-					//})
-			})
+					})
 	}
 		
 }
