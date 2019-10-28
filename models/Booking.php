@@ -1,9 +1,10 @@
 <?php
 class Booking
 {	
-	public static function getRows($id=null){
+	public static function getRows($master=null, $date=null){
 		$db = Db::getConnection();
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$executeArray = array();	
 
 		$sqlText = "select b.Id as Id, 
 							u.Name as MasterName, 
@@ -16,10 +17,23 @@ class Booking
 							join users u on b.EmployeeId = u.Id 
 							join clients c on b.ClientId = c.Id
 							join services s on b.ServiceId = s.Id";
-		//where u.Id = :id";
-		$result = $db->prepare($sqlText);
-		$result->execute(array(':id' => $id));
+		if($master != null || $date != null){
+			$additionalSql = " WHERE ";
+			if($master != null){
+				$additionalSql = $additionalSql." u.Id = :master ";
+				$executeArray[':master'] = $master;
+			}
+			if($date != null){
+				$additionalSql = $additionalSql." date(b.BookingTime) = :date ";
+				$executeArray[':date'] = $date;
+			}
+			$sqlText = $sqlText.$additionalSql;
+		}
+		$sqlText = $sqlText." order by b.BookingTime desc";
 		
-		return $result->fetchAll(PDO::FETCH_CLASS);	
+		$result = $db->prepare($sqlText);
+		$result->execute($executeArray);
+		
+		return $result->fetchAll(PDO::FETCH_CLASS);
 	}
 }

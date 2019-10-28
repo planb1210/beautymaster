@@ -17,15 +17,10 @@ class BookingController extends AdminController{
 	
 	public function actionGetRows()
 	{
-		/*if(isset($_POST['phone'])){
-			$client = Home::getClient($_POST['phone']);
-			echo json_encode($client, JSON_UNESCAPED_UNICODE);
-		}
-		else{
-			echo null;
-		}/**/
+		$master = isset($_POST['master']) ? $_POST['master'] : null;
+		$date = isset($_POST['date']) ? $_POST['date'] : null;
 
-		$rows = Booking::getRows();
+		$rows = Booking::getRows($master, $date);
 		echo json_encode($rows, JSON_UNESCAPED_UNICODE);
 		return true;
 	}
