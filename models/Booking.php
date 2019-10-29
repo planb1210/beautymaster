@@ -1,10 +1,10 @@
 <?php
 class Booking
 {	
-	public static function getRows($master=null, $date=null){
+	public static function getRows($master = null, $date = null, $page = 1){
+		$limit = 10;
 		$db = Db::getConnection();
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$executeArray = array();	
 
 		$sqlText = "select b.Id as Id, 
 							u.Name as MasterName, 
@@ -21,18 +21,30 @@ class Booking
 			$additionalSql = " WHERE ";
 			if($master != null){
 				$additionalSql = $additionalSql." u.Id = :master ";
-				$executeArray[':master'] = $master;
 			}
 			if($date != null){
+				if($master != null){
+					$additionalSql = $additionalSql." AND ";
+				}
 				$additionalSql = $additionalSql." date(b.BookingTime) = :date ";
-				$executeArray[':date'] = $date;
 			}
 			$sqlText = $sqlText.$additionalSql;
 		}
-		$sqlText = $sqlText." order by b.BookingTime desc";
 		
+		$sqlText = $sqlText." order by b.BookingTime desc LIMIT :limit OFFSET :offset";		
 		$result = $db->prepare($sqlText);
-		$result->execute($executeArray);
+		
+		//--------------------------------------------------------------------------------------------------
+		$result->bindValue(':limit', (int) $limit, PDO::PARAM_INT); 
+		$result->bindValue(':offset', (int) (($page - 1) * $limit), PDO::PARAM_INT);
+		if($master != null){
+			$result->bindValue(':master', $master); 
+		}
+		if($date != null){
+			$result->bindValue(':date', $date);
+		}
+		//--------------------------------------------------------------------------------------------------
+		$result->execute();
 		
 		return $result->fetchAll(PDO::FETCH_CLASS);
 	}
