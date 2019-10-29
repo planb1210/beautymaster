@@ -133,12 +133,20 @@ class CalendarBlock extends BaseBlock {
 	
 	getManicureTimeParts(rows, serviceDuration){
 		var self = this;
-		var result = manicureTimeParts;		
+		var prepareResult = barberShopTimeParts;	
 		
 		rows.forEach(function(row) {
-			result = self.getTimePart(result, row, serviceDuration);			
-		});		
-		return result;
+			prepareResult = self.getTimePart(prepareResult, row, serviceDuration);			
+		});
+		
+		var lastResults = [];
+		manicureTimeParts.forEach(function(row) {
+			var findValue = prepareResult.find(x => x.hour() == row.hour() && x.minute() == row.minute());
+			if(findValue!=undefined){
+				lastResults.push(findValue);
+			}
+		});
+		return lastResults;
 	}
 	
 	prepareLastTime(parts, serviceDuration){

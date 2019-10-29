@@ -36,7 +36,7 @@ class Home
 		}
 		else{
 			$sqlText = "select 
-						s.Id, s.Name, s.Price, s.Duration, s.Description
+						s.Id, s.Name, s.Price, s.Duration, s.Description, s.DivisionId
 						from services s";
 			$result = $db->query($sqlText);
 		}
