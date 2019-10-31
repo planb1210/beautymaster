@@ -61,6 +61,13 @@
 							<!-- /ko -->
 						</table>
 					</div>
+					<!-- ko if: !isPagingBusy() -->					
+						<div class="pagination_wrapper">
+							<!-- ko foreach: buttons -->
+								<div class="page" data-bind="text:$data, click: function() {$parent.clickPage($data)}, css: { 'current_page': $parent.currentPage() == $data }"></div>
+							<!-- /ko -->
+						</div>
+					<!-- /ko -->
 				<!-- /ko -->
 			</div>
 		</div>
