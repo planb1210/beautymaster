@@ -87,8 +87,14 @@ var BookingModel = class {
 		self.isPagingBusy(true);
 		if(self.pageCount()>1){
 			var firstPage = (self.currentPage() > 2) ? self.currentPage()-2 : 0;
-			for (var i = 0; i <= 5; i++) {
-				self.buttons().push(i+firstPage);
+			
+			if(self.currentPage()>=3){
+				self.buttons().push(0);
+			}
+			for (var i = 0; i < 5; i++) {
+				if(i+firstPage <= self.pageCount()){
+					self.buttons().push(i+firstPage);
+				}
 			}
 			if(self.pageCount()>firstPage+5){
 				self.buttons().push(self.pageCount());
