@@ -48,4 +48,39 @@ class Booking
 		
 		return $result->fetchAll(PDO::FETCH_CLASS);
 	}
+	
+	public static function getCountRows($master = null, $date = null){
+		$db = Db::getConnection();
+		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+		$sqlText = "select Count(*) as Count from booking b 
+							join users u on b.EmployeeId = u.Id 
+							join clients c on b.ClientId = c.Id
+							join services s on b.ServiceId = s.Id";
+		if($master != null || $date != null){
+			$additionalSql = " WHERE ";
+			if($master != null){
+				$additionalSql = $additionalSql." u.Id = :master ";
+			}
+			if($date != null){
+				if($master != null){
+					$additionalSql = $additionalSql." AND ";
+				}
+				$additionalSql = $additionalSql." date(b.BookingTime) = :date ";
+			}
+			$sqlText = $sqlText.$additionalSql;
+		}
+		
+		$result = $db->prepare($sqlText);
+
+		if($master != null){
+			$result->bindValue(':master', $master); 
+		}
+		if($date != null){
+			$result->bindValue(':date', $date);
+		}
+
+		$result->execute();		
+		return $clientId = $result->fetch(PDO::FETCH_OBJ)->Count;
+	}
 }

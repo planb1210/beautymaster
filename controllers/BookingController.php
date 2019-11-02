@@ -19,9 +19,19 @@ class BookingController extends AdminController{
 	{
 		$master = isset($_POST['master']) ? $_POST['master'] : null;
 		$date = isset($_POST['date']) ? $_POST['date'] : null;
+		$page = isset($_POST['page']) ? $_POST['page'] : 1;
 
-		$rows = Booking::getRows($master, $date);
+		$rows = Booking::getRows($master, $date, $page);
 		echo json_encode($rows, JSON_UNESCAPED_UNICODE);
+		return true;
+	}
+	
+	public function actionGetCountRows(){
+		$master = isset($_POST['master']) ? $_POST['master'] : null;
+		$date = isset($_POST['date']) ? $_POST['date'] : null;
+
+		$count = Booking::getCountRows($master, $date);
+		echo json_encode($count, JSON_UNESCAPED_UNICODE);
 		return true;
 	}
 }

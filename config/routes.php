@@ -29,4 +29,5 @@ return array(
 	'profile/AddSkill' => 'profile/Edit',
 	'info' => 'info/index',
 	'booking/GetRows' => 'booking/GetRows',
+	'booking/GetCountRows' => 'booking/GetCountRows',
 	'booking' => 'booking/index');
