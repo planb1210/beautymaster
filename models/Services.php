@@ -64,3 +64,4 @@ class Services
 		$result->execute(array(':id' => $id,':skillId' =>$skillId));
 		return $result->fetchAll(PDO::FETCH_CLASS);		
 	}
+}
