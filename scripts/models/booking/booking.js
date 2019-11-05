@@ -7,29 +7,18 @@ var MasterModel = class{
 	}
 };
 
-var PaginationModel = class {
-    constructor() {
-		var self = this;
-		this.countUrl = "/booking/GetPages";
-		this.buttons = ko.observableArray([]);
-		this.isBusy = ko.observable(true);
-		
-		this.currentPage = ko.observable(0);
+var ItemModel = class{
+	constructor(item) {
+		this.masterName = item.MasterName;
+		this.clientName = item.ClientName;
+		this.serviceName = item.ServiceName;
+		this.price = item.Price+" руб.";
+		this.duration = item.Duration+" ч.";
+		this.bookingTime = item.BookingTime;
+		this.comment = item.Comment;
 	}
-	
-	getCount() {
-		var self = this;
-		self.isBusy(true);
-		$.post(self.countUrl)
-		.done(function(result) {
-			var count = JSON.parse(result);
-			if(count != null){
-				
-			}
-			self.isBusy(false);
-		});
-	}	
-}	
+};
+
 var BookingModel = class {
     constructor() {
 		var self = this;
@@ -46,16 +35,13 @@ var BookingModel = class {
 		this.items = ko.observableArray([]);
 		this.isItemsBusy = ko.observable(true);
 		//-------------------------------------------------------------------
-		this.buttons = ko.observableArray([]);
-		this.currentPage = ko.observable(1);
-		this.pageCount = ko.observable(1);
-		this.isPagingBusy = ko.observable(true);
-		
+		this.pagination = new PaginationModel();
 		this.run();
 	}
 	
 	run(){
 		var self = this;
+		self.pagination.currentPage(1);
 		self.getItems();
 		self.getPageCount();
 	}
@@ -65,7 +51,7 @@ var BookingModel = class {
 		self.isItemsBusy(true);
 
 		var data = {};
-		data.page = self.currentPage();
+		data.page = self.pagination.currentPage();
 		
 		if(self.selectedDate()!=undefined && self.selectedDate()!=""){
 			data.date = self.selectedDate();
@@ -79,7 +65,9 @@ var BookingModel = class {
 		.done(function(result) {
 			var rows = JSON.parse(result);
 			if(rows.length > 0){
-				self.items(rows);
+				rows.forEach(function(row) {
+					self.items.push(new ItemModel(row));
+				});
 			}
 			self.isItemsBusy(false);
 		});
@@ -94,41 +82,20 @@ var BookingModel = class {
 		if(self.selectedMaster()!=undefined){
 			data.master = self.selectedMaster();
 		}
-		self.isPagingBusy(true);
+		self.pagination.isPagingBusy(true);
 		$.post(self.countItemsUrl, data)
 		.done(function(result) {
 			var count = JSON.parse(result);
-			self.pageCount(count != null ?  Math.ceil(count/10) : 0);
-			self.generateButtons();
-			self.isPagingBusy(false);
+			self.pagination.pageCount(count != null ?  Math.ceil(count/10) : 0);
+			self.pagination.generateButtons();
+			self.pagination.isPagingBusy(false);
 		});
-	}
-	
-	generateButtons(){
-		var self = this;
-		self.buttons([]);
-		
-		if(self.pageCount()>1){
-			var firstPage = (self.currentPage() > 3) ? self.currentPage()-2 : 1;
-			
-			if(self.currentPage()>3){
-				self.buttons().push(1);
-			}
-			for (var i = 0; i < 5; i++) {
-				if(i+firstPage <= self.pageCount()){
-					self.buttons().push(i+firstPage);
-				}
-			}
-			if(self.pageCount()>firstPage+5){
-				self.buttons().push(self.pageCount());
-			}
-		}
 	}
 	
 	clickPage(newPage){
 		var self = this;
-		self.currentPage(newPage);
-		self.generateButtons();
+		self.pagination.currentPage(newPage);
+		self.pagination.generateButtons();
 		self.getItems();
 	}
 	
