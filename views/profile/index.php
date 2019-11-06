@@ -10,13 +10,9 @@
         <script type="text/javascript" src="/scripts/models/users/users.js"></script>
 	</head>
 	<body>
-		<div class="container-header">
-			<span class="logo">BeautyMaster</span>
-		</div>
+		<?php echo $this->head; ?>
 		<div class="container-wrapper container">
-			<div class="top-content">
-				<div class="mask-top-content"></div>
-			</div>			
+			<?php echo $this->menu; ?>
 			<div class="content">
 				<div class="middle-block">
 					<!-- ko with: users()[0] -->
