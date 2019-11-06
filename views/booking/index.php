@@ -6,10 +6,6 @@
 		<link href="/template/css/styles.css" rel="stylesheet" type="text/css" media="screen" />
 		<link href="/template/css/admin.css" rel="stylesheet" type="text/css" media="screen" />
 		<link href="/template/css/kalendae.css" rel="stylesheet" type="text/css" charset="utf-8">
-		<script type="text/javascript" src="/scripts/jquery-3.4.1.js"></script>
-        <script type="text/javascript" src="/scripts/knockout-3.5.0.js"></script>
-		<script type="text/javascript" src="/scripts/kalendae.standalone.js"></script>	
-        <script type="text/javascript" src="/scripts/models/booking/booking.js"></script>		
 	</head>
 	<body>
 		<?php echo $this->head; ?>
@@ -21,14 +17,10 @@
 				<!-- /ko -->
 				<!-- ko ifnot: isMastersBusy -->
 				<div class="filter">
-					<div>Мастера:
-						<select data-bind="options: masters, optionsText: 'Name', optionsValue: 'Id', value: selectedMaster, optionsCaption: '-'"></select>
-					</div>
-					<div>Дата:					
-						<input id="cal" type="text" data-bind="value: selectedDate">
-					</div>
+					<div>Фильтр по мастеру: <select data-bind="options: masters, optionsText: 'Name', optionsValue: 'Id', value: selectedMaster, optionsCaption: '-'"></select></div>
+					<div>Фильтр по дате: <input id="cal" type="text" data-bind="value: selectedDate"></div>
 					<div>
-						<button type="submit" data-bind="click: function() {run()}">Выбрать</button>
+						<button class="button-item button-enable" type="submit" data-bind="click: function() {run()}">Выбрать</button>
 					</div>
 				</div>
 				<!-- /ko -->
@@ -50,28 +42,35 @@
 							</tr>
 							<!-- ko foreach: items -->
 								<tr class="row">
-									<td data-bind="text:MasterName"></td>
-									<td data-bind="text:ClientName"></td>
-									<td data-bind="text:ServiceName"></td>
-									<td data-bind="text:Price"></td>
-									<td data-bind="text:Duration"></td>
-									<td data-bind="text:BookingTime"></td>
-									<td data-bind="text:Comment"></td>
+									<td data-bind="text:masterName"></td>
+									<td data-bind="text:clientName"></td>
+									<td data-bind="text:serviceName"></td>
+									<td data-bind="text:price"></td>
+									<td data-bind="text:duration"></td>
+									<td data-bind="text:bookingTime"></td>
+									<td class="left_text" data-bind="text:comment"></td>
 								</tr>
 							<!-- /ko -->
 						</table>
 					</div>
-					<!-- ko if: !isPagingBusy() -->					
-						<div class="pagination_wrapper">
-							<!-- ko foreach: buttons -->
-								<div class="page" data-bind="text:$data, click: function() {$parent.clickPage($data)}, css: { 'current_page': $parent.currentPage() == $data }"></div>
-							<!-- /ko -->
-						</div>
+					<!-- ko with: pagination -->
+						<!-- ko if: !isPagingBusy() -->
+							<div class="pagination_wrapper">
+								<!-- ko foreach: buttons -->
+									<div class="page" data-bind="text:$data, click: function() {$root.clickPage($data)}, css: { 'current_page': $parent.currentPage() == $data }"></div>
+								<!-- /ko -->
+							</div>
+						<!-- /ko -->
 					<!-- /ko -->
 				<!-- /ko -->
 			</div>
 		</div>
 		<?php echo $this->footer; ?>
+		<script type="text/javascript" src="/scripts/jquery-3.4.1.js"></script>
+        <script type="text/javascript" src="/scripts/knockout-3.5.0.js"></script>
+		<script type="text/javascript" src="/scripts/kalendae.standalone.js"></script>	
+        <script type="text/javascript" src="/scripts/models/booking/booking.js"></script>	
+		<script type="text/javascript" src="/scripts/models/shared/paginationModel.js"></script>	
 		<script>
 			 let viewModel = new BookingModel();
 			 ko.applyBindings(viewModel);

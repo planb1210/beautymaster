@@ -32,21 +32,54 @@ ul li {
     justify-content: center;
     display: flex;
     width: 100%;
+	margin-top: 20px;
+    margin-bottom: 20px;
 }
+
+	.filter div{
+		margin-right:10px;
+	}
+	
+		.filter div select,input{
+			width:200px;
+		}
+		
+	.filter .button-item {
+		line-height: 18px;
+		font-size: 15px;
+		margin:0px;
+	}
+	
+	.filter .button-item:hover {
+		cursor:pointer;
+	}
 /*--------------------------------------------------------------*/
 /*----------------------data table------------------------------*/
 .data_table{
 	width:100%;
 	overflow:hidden;
 }
+
 .data_table table{
 	width:100%;
+	border-collapse: collapse;
 }
-.data_table tr th,td{
-	padding-left:10px;
-	padding-right:10px;
-	word-wrap: break-word;
-}
+
+	.data_table tr th{
+		background: #a8a8a8;
+	}
+
+	.data_table tr th,td{
+		padding-left:10px;
+		padding-right:10px;
+		word-wrap: break-word;
+		text-align: center;
+		border: 1px solid #607d8b;
+	}
+
+	.data_table .left_text{
+		text-align: left;
+	}
 /*-------------------------------------------------------------*/
 .pagination_wrapper{
     max-width: 200px;

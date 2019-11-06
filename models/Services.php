@@ -1,6 +1,5 @@
 <?php
 
-
 class Services
 {
 	public static function getServices($id=null, $skillsArr=null){
@@ -20,8 +19,8 @@ class Services
 			$result = $db->query($sqlText);
 			return $result->fetchAll();
 		}
-		
 	}
+	
 	public static function addService($name, $price, $duration, $divisionid, $description){
 		$db = Db::getConnection();
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -46,14 +45,15 @@ class Services
 	 	$sql->execute(array(':id' => $id));
 	 	$sql = $db->prepare("ALTER TABLE services AUTO_INCREMENT=0");
 	 	$sql->execute(array(':id' => $id));
-		}
+	}
 		
 	public static function deleteSkill($id, $skillId){
 		$db = Db::getConnection();
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	 	$sql = $db->prepare("DELETE FROM skills WHERE EmployeeId=:id AND ServiceId=:skillId");
 	 	$sql->execute(array(':id' => $id,':skillId' =>$skillId));
-		}
+	}
+		
 	public static function addSkill($id, $skillId){
 		$db = Db::getConnection();
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -62,10 +62,6 @@ class Services
 		$sqlText = "select u.Id, u.Name, s.Name as Skill, s.Id as No from services s left join skills sk on s.Id=sk.ServiceId left join users u on sk.EmployeeId = u.Id where sk.EmployeeId=:id and sk.ServiceId=:skillId";
 		$result = $db->prepare($sqlText);
 		$result->execute(array(':id' => $id,':skillId' =>$skillId));
-		return $result->fetchAll(PDO::FETCH_CLASS);
-		
-		}
-	
+		return $result->fetchAll(PDO::FETCH_CLASS);		
+	}
 }
-
-
