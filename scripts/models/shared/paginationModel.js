@@ -25,7 +25,7 @@ var PaginationModel = class {
 					self.buttons().push(i+firstPage);
 				}
 			}
-			if(self.pageCount()>firstPage+5){
+			if(self.pageCount()>firstPage+4){
 				self.buttons().push(self.pageCount());
 			}
 		}

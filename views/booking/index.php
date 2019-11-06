@@ -18,6 +18,7 @@
 				<!-- ko ifnot: isMastersBusy -->
 				<div class="filter">
 					<div>Фильтр по мастеру: <select data-bind="options: masters, optionsText: 'Name', optionsValue: 'Id', value: selectedMaster, optionsCaption: '-'"></select></div>
+					<div>Фильтр по клиенту: <input type="text" data-bind="value: client"></div>
 					<div>Фильтр по дате: <input id="cal" type="text" data-bind="value: selectedDate"></div>
 					<div>
 						<button class="button-item button-enable" type="submit" data-bind="click: function() {run()}">Выбрать</button>
@@ -34,6 +35,7 @@
 							<tr class="row header">
 								<th>Имя мастера</th>
 								<th>Имя клиента</th>
+								<th>Телефон клиента</th>
 								<th>Услуга</th>
 								<th>Цена</th>
 								<th>Длительность</th>
@@ -44,10 +46,11 @@
 								<tr class="row">
 									<td data-bind="text:masterName"></td>
 									<td data-bind="text:clientName"></td>
+									<td data-bind="text:clientPhone"></td>
 									<td data-bind="text:serviceName"></td>
 									<td data-bind="text:price"></td>
 									<td data-bind="text:duration"></td>
-									<td data-bind="text:bookingTime"></td>
+									<td data-bind="text:showTime"></td>
 									<td class="left_text" data-bind="text:comment"></td>
 								</tr>
 							<!-- /ko -->
@@ -68,9 +71,9 @@
 		<?php echo $this->footer; ?>
 		<script type="text/javascript" src="/scripts/jquery-3.4.1.js"></script>
         <script type="text/javascript" src="/scripts/knockout-3.5.0.js"></script>
-		<script type="text/javascript" src="/scripts/kalendae.standalone.js"></script>	
-        <script type="text/javascript" src="/scripts/models/booking/booking.js"></script>	
-		<script type="text/javascript" src="/scripts/models/shared/paginationModel.js"></script>	
+		<script type="text/javascript" src="/scripts/kalendae.standalone.js"></script>
+        <script type="text/javascript" src="/scripts/models/booking/booking.js"></script>
+		<script type="text/javascript" src="/scripts/models/shared/paginationModel.js"></script>
 		<script>
 			 let viewModel = new BookingModel();
 			 ko.applyBindings(viewModel);

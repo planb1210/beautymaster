@@ -9,13 +9,19 @@ var MasterModel = class{
 
 var ItemModel = class{
 	constructor(item) {
+		var self = this;
 		this.masterName = item.MasterName;
 		this.clientName = item.ClientName;
+		this.clientPhone = item.ClientPhone;
 		this.serviceName = item.ServiceName;
 		this.price = item.Price+" руб.";
 		this.duration = item.Duration+" ч.";
 		this.bookingTime = item.BookingTime;
 		this.comment = item.Comment;
+		this.showTime = ko.computed(function() {
+			var momentDate = Kalendae.moment(self.bookingTime);
+			return momentDate.format('DD.MM.YYYY HH:mm');
+		});
 	}
 };
 
@@ -30,8 +36,9 @@ var BookingModel = class {
 		this.isMastersBusy = ko.observable(true);
 		this.selectedDate = ko.observable();
 		this.selectedMaster = ko.observable();
+		this.client = ko.observable();
 		this.getMasters();
-    	//-------------------------------------------------------------------		
+    	//-------------------------------------------------------------------
 		this.items = ko.observableArray([]);
 		this.isItemsBusy = ko.observable(true);
 		//-------------------------------------------------------------------
@@ -59,6 +66,9 @@ var BookingModel = class {
 		if(self.selectedMaster()!=undefined){
 			data.master = self.selectedMaster();
 		}
+		if(self.client()!=undefined && self.client()!=""){
+			data.client = self.client();
+		}
 		
 		self.items([]);
 		$.post(self.itemsUrl, data)
@@ -75,13 +85,18 @@ var BookingModel = class {
 	
 	getPageCount(){
 		var self = this;
-		var data = {}
+		var data = {};
+		
 		if(self.selectedDate()!=undefined && self.selectedDate()!=""){
 			data.date = self.selectedDate();
 		}
 		if(self.selectedMaster()!=undefined){
 			data.master = self.selectedMaster();
 		}
+		if(self.client()!=undefined && self.client()!=""){
+			data.client = self.client();
+		}
+		
 		self.pagination.isPagingBusy(true);
 		$.post(self.countItemsUrl, data)
 		.done(function(result) {
@@ -109,7 +124,7 @@ var BookingModel = class {
 				rows.forEach(function(item) {
 					self.masters.push(new MasterModel(item));
 				});
-			}			
+			}
 			
 			self.isMastersBusy(false);
 			

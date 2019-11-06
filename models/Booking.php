@@ -1,7 +1,7 @@
 <?php
 class Booking
 {	
-	public static function getRows($master = null, $date = null, $page = 1){
+	public static function getRows($master = null, $client = null, $date = null, $page = 1){
 		$limit = 10;
 		$db = Db::getConnection();
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -9,6 +9,7 @@ class Booking
 		$sqlText = "select b.Id as Id, 
 							u.Name as MasterName, 
 							c.Name as ClientName, 
+							c.Phone as ClientPhone, 
 							s.Name as ServiceName, 
 							s.Price as Price, 
 							s.Duration as Duration, 
@@ -16,14 +17,22 @@ class Booking
 							b.Comment as Comment from booking b 
 							join users u on b.EmployeeId = u.Id 
 							join clients c on b.ClientId = c.Id
-							join services s on b.ServiceId = s.Id";
-		if($master != null || $date != null){
+							join services s on b.ServiceId = s.Id ";
+		if($master != null || $client != null || $date != null){
 			$additionalSql = " WHERE ";
 			if($master != null){
 				$additionalSql = $additionalSql." u.Id = :master ";
 			}
-			if($date != null){
+			/*---------------------------------------------------------------*/
+			if($client != null){
 				if($master != null){
+					$additionalSql = $additionalSql." AND ";
+				}
+				$additionalSql = $additionalSql." (LOWER(c.Name) Like LOWER(:clientText) OR LOWER(c.Phone) like LOWER(:clientText)) ";
+			}
+			/*---------------------------------------------------------------*/
+			if($date != null){
+				if($master != null || $client != null){
 					$additionalSql = $additionalSql." AND ";
 				}
 				$additionalSql = $additionalSql." date(b.BookingTime) = :date ";
@@ -40,16 +49,19 @@ class Booking
 		if($master != null){
 			$result->bindValue(':master', $master); 
 		}
+		if($client != null){
+			$result->bindValue(':clientText', '%'.$client.'%');
+		}
 		if($date != null){
 			$result->bindValue(':date', $date);
 		}
 		//--------------------------------------------------------------------------------------------------
 		$result->execute();
-		
+
 		return $result->fetchAll(PDO::FETCH_CLASS);
 	}
 	
-	public static function getCountRows($master = null, $date = null){
+	public static function getCountRows($master = null, $client = null, $date = null){
 		$db = Db::getConnection();
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
@@ -57,13 +69,19 @@ class Booking
 							join users u on b.EmployeeId = u.Id 
 							join clients c on b.ClientId = c.Id
 							join services s on b.ServiceId = s.Id";
-		if($master != null || $date != null){
+		if($master != null || $client != null || $date != null){
 			$additionalSql = " WHERE ";
 			if($master != null){
 				$additionalSql = $additionalSql." u.Id = :master ";
 			}
-			if($date != null){
+			if($client != null){
 				if($master != null){
+					$additionalSql = $additionalSql." AND ";
+				}
+				$additionalSql = $additionalSql." (LOWER(c.Name) Like LOWER(:clientText) OR LOWER(c.Phone) like LOWER(:clientText)) ";
+			}
+			if($date != null){
+				if($master != null || $client != null){
 					$additionalSql = $additionalSql." AND ";
 				}
 				$additionalSql = $additionalSql." date(b.BookingTime) = :date ";
@@ -76,10 +94,13 @@ class Booking
 		if($master != null){
 			$result->bindValue(':master', $master); 
 		}
+		if($client != null){
+			$result->bindValue(':clientText', '%'.$client.'%');
+		}
 		if($date != null){
 			$result->bindValue(':date', $date);
 		}
-
+		
 		$result->execute();		
 		return $clientId = $result->fetch(PDO::FETCH_OBJ)->Count;
 	}
