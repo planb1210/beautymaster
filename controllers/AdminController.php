@@ -30,9 +30,9 @@ class AdminController {
 	}
 	
 	protected function AddPartials(){		
-		$this->head = file_get_contents(ROOT.'\views\shared\adminContainerHeader.php');
-		$this->menu = file_get_contents(ROOT.'\views\shared\adminMenu.php');	
-		$this->footer = file_get_contents(ROOT.'\views\shared\adminContainerFooter.php');			
+		$this->head = file_get_contents(ROOT.'/views/shared/adminContainerHeader.php');
+		$this->menu = file_get_contents(ROOT.'/views/shared/adminMenu.php');	
+		$this->footer = file_get_contents(ROOT.'/views/shared/adminContainerFooter.php');			
 	}
-	
 }
+

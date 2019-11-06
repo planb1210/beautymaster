@@ -8,8 +8,8 @@ class Services
 		
 		if($id != null && $skillsArr != null){			
 			$total = count($skillsArr);
-			$quest_marks = array_fill(0,$total, '?');			
-			$sqlText = "select s.Name as Skill, s.Id as No from services s left join skills sk on s.Id=sk.ServiceId left join users u on sk.EmployeeId = u.Id where sk.EmployeeId IS NULL or (u.Id!=? and s.Name NOT IN(".implode(',',$quest_marks)."))";
+			$quest_marks = array_fill(0,$total, '?');
+			$sqlText = "select distinct s.Name as Skill, s.Id as No from services s left join skills sk on s.Id=sk.ServiceId left join users u on sk.EmployeeId = u.Id where sk.EmployeeId IS NULL or (u.Id!=? and s.Id NOT IN(".implode(',',$quest_marks)."))";
 			$result = $db->prepare($sqlText);
 			$result->execute(array_merge(array($id),array_values($skillsArr)));			
 			return $result->fetchAll(PDO::FETCH_CLASS);

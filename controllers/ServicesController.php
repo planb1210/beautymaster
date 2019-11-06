@@ -6,7 +6,7 @@ include_once ROOT. '/controllers/AdminController.php';
 class ServicesController extends AdminController{
 
 	public function actionIndex(){		
-		//$this->CheckPermissions();
+		$this->CheckPermissions();
 		$this->AddPartials();
 				
 		require_once(ROOT . '/views/services/index.php');

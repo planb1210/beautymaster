@@ -9,20 +9,17 @@ var User = class {
 		this.password = ko.observable(item.Password);
 		this.role = ko.observable(item.Role);
 		this.editMode = ko.observable(false);
-	}
-	
-	toggleMode(){
+	}	
+	toggleMode() {
 		this.editMode(!this.editMode());
-	}
-	
-	save(){
+	}	
+	save() {
 		$.post("/users/editUser", {id: this.id(),name:this.name(), email:this.email(), password:this.password(), submit:'Редактировать'})
 			.done(function(result) {
 					alert('Изменения сохранены');
 			})
 	}
-};
-
+}
 
 var Skill = class {
 	constructor(item) {
@@ -31,11 +28,8 @@ var Skill = class {
 		 this.name = ko.observable(item.Name);
 		 this.skill = ko.observable(item.Skill);
 		 this.skillId = ko.observable(item.No);		 
-		 }
-		 
-		
-	}
-
+	}		
+}
 
 var UsersModel = class {
     constructor(isProfile) {
@@ -43,19 +37,15 @@ var UsersModel = class {
 		this.users = ko.observableArray([]);
 		this.skills = ko.observableArray([]);
 		this.skillsToAdd = ko.observableArray([]);
-		//this.skillsEmptyId=(window.location.pathname).split('/')[2];
-		//this.emptyUserName=get
-		//this.emptyUserName=ko.computed(function(){ var b=self.users().find(function(it){return it.id()==self.skillsEmptyId()}); if (b!==undefined){return b.name()}});
-		this.skillArr = ko.computed(function(){var a=[];self.skills().forEach(function(el){a.push(el.skill())}); return a});
+		this.skillArr = ko.computed(function(){var a=[];self.skills().forEach(function(el){a.push(el.skillId())}); return a});
 		this.profileMode = ko.observable(false);
 		this.editSkillMode = ko.observable(false);
 		this.getUsersUrl = "/users/GetUsers";
 		this.deleteUsersUrl = "/users/deleteUser";
 		this.addUsersUrl = "/users/addUser";
-		if (isProfile){} else{
+		if (isProfile){} else {
 		this.viewUsers();
 		}
-				
 	}
 	
 	viewUsers() {
@@ -65,8 +55,8 @@ var UsersModel = class {
 			.done(function(result) {
 					JSON.parse(result).forEach(function(item) {
 					self.users.push(new User(item));
-				});
-			});
+					})
+			})
 		}		
 	}
 			
@@ -74,36 +64,36 @@ var UsersModel = class {
 		self = this;
 		$.post(self.deleteUsersUrl, {submit:'Удалить', id: ID})
 			.done(function(result) {
-				alert('удален')});
+				alert('удален');
+			})
 		this.users.remove(function(item){return item.id() === ID});
 	}
 	
-	addUser(form){
+	addUser(form) {
 		self = this;
 		var arr=[];
-		for(var i=0; i<4; i++){
-		arr.push(form[i].value);}
+		for (var i=0; i<4; i++){
+		arr.push(form[i].value)
+		}
 		$.post(self.addUsersUrl, {name:arr[0], email:arr[1], password:arr[2], submit:arr[3]})
 			.done(function(result) {
-					JSON.parse(result).forEach(function(item){
+					JSON.parse(result).forEach(function(item) {
 					self.users.push(new User(item));
 					alert('пользователь добавлен');					
-				})
+					})
 			})
-		
 	}
 	
-	viewProfile(id){
+	viewProfile(id) {
 		self = this;
 		$.post('/profile/GetUsers', {id:id})
 			.done(function(result) {
-				JSON.parse(result).forEach(function(item){								
+				JSON.parse(result).forEach(function(item) {								
 				self.users.push(new User(item));
-				if (!("Email" in item))self.skills.push(new Skill(item))
+				if (!("Email" in item)) self.skills.push(new Skill(item))
 				})
 			})
-		}
-	
+	}
 	
 	deleteSkill(id, skillId) {
 		self = this;
@@ -111,8 +101,7 @@ var UsersModel = class {
 			.done(function(result) {
 				self.skills.remove(function(item){return item.skillId()==skillId()});
 				alert('удален');											
-			})
-		
+			})		
 	}
 	
 	viewSkillsToAdd(id, skillsArr) {
@@ -121,17 +110,17 @@ var UsersModel = class {
 		.done(function(result) {
 			JSON.parse(result).forEach(function(item){
 			self.skillsToAdd.push(new Skill(item));
-			});
+			})
 		})
 	}
 	
-	addSkill(id, skillId){
+	addSkill(id, skillId) {
 		self = this;
 		$.post('/profile/AddSkill', {submit:'Добавить', id:id, skillId:skillId})
 		.done(function(result) {
 			JSON.parse(result).forEach(function(item){
 			self.skills.push(new Skill(item));
-			});
+			})
 		})
 	}
 		
