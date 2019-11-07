@@ -104,4 +104,16 @@ class Booking
 		$result->execute();		
 		return $clientId = $result->fetch(PDO::FETCH_OBJ)->Count;
 	}
+	
+	public static function deleteRowById($id){
+		$db = Db::getConnection();
+		try {
+			$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			$sql = $db->prepare("DELETE FROM booking WHERE Id=:id");
+			$sql->execute(array(':id' => $id));
+			return true;
+		} catch (Exception $e) {
+			return false;
+		}
+	}
 }

@@ -36,4 +36,13 @@ class BookingController extends AdminController{
 		echo json_encode($count, JSON_UNESCAPED_UNICODE);
 		return true;
 	}
+	
+	public function actionDeleteRowById(){
+		$result = false;
+		if(isset($_POST['id'])){
+			$result = Booking::deleteRowById($_POST['id']);
+		}
+		echo json_encode($result, JSON_UNESCAPED_UNICODE);
+		return true;
+	}
 }

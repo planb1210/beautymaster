@@ -3,9 +3,11 @@
 	<head>
 		<meta charset="utf-8">
 		<title>BeautyMaster Booking</title>
+		<link href="/template/css/jquery-ui.css" rel="stylesheet" type="text/css" charset="utf-8">
 		<link href="/template/css/styles.css" rel="stylesheet" type="text/css" media="screen" />
 		<link href="/template/css/admin.css" rel="stylesheet" type="text/css" media="screen" />
 		<link href="/template/css/kalendae.css" rel="stylesheet" type="text/css" charset="utf-8">
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
 	</head>
 	<body>
 		<?php echo $this->head; ?>
@@ -41,6 +43,8 @@
 								<th>Длительность</th>
 								<th>Время записи</th>
 								<th>Комментарий клиента</th>
+								<th></th>
+								<th></th>
 							</tr>
 							<!-- ko foreach: items -->
 								<tr class="row">
@@ -52,6 +56,8 @@
 									<td data-bind="text:duration"></td>
 									<td data-bind="text:showTime"></td>
 									<td class="left_text" data-bind="text:comment"></td>
+									<td><div class="ico_edit fa fa-pencil-square-o" data-bind="click: function() { $parent.editItem($data); }"></div></td>
+									<td><div class="ico_delete fa fa-times" data-bind="click: function() { $parent.removeItem(id); }"></div></td>
 								</tr>
 							<!-- /ko -->
 						</table>
@@ -69,14 +75,20 @@
 			</div>
 		</div>
 		<?php echo $this->footer; ?>
+		
+		<div id="editDisplay" style="display:none">
+			<div>Клиент: <input data-bind="value: editor.clientName" /></div>
+		</div>
+
 		<script type="text/javascript" src="/scripts/jquery-3.4.1.js"></script>
+		<script type="text/javascript" src="/scripts/jquery-ui.min.js"></script>
         <script type="text/javascript" src="/scripts/knockout-3.5.0.js"></script>
 		<script type="text/javascript" src="/scripts/kalendae.standalone.js"></script>
         <script type="text/javascript" src="/scripts/models/booking/booking.js"></script>
 		<script type="text/javascript" src="/scripts/models/shared/paginationModel.js"></script>
 		<script>
-			 let viewModel = new BookingModel();
-			 ko.applyBindings(viewModel);
+			let viewModel = new BookingModel();
+			ko.applyBindings(viewModel);
 		</script>		
 	</body>
 </html>

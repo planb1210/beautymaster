@@ -80,6 +80,19 @@ ul li {
 	.data_table .left_text{
 		text-align: left;
 	}
+
+.ico_edit{
+	color:#607d8b;
+	margin-top:2px;
+}
+
+.ico_delete{
+	color:red
+}
+
+.ico_edit,.ico_delete:hover{
+	cursor:pointer;
+}
 /*-------------------------------------------------------------*/
 .pagination_wrapper{
     max-width: 200px;

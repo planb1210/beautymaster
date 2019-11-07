@@ -30,4 +30,5 @@ return array(
 	'info' => 'info/index',
 	'booking/GetRows' => 'booking/GetRows',
 	'booking/GetCountRows' => 'booking/GetCountRows',
+	'booking/DeleteRowById' => 'booking/DeleteRowById',	
 	'booking' => 'booking/index');

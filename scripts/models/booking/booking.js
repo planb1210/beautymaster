@@ -10,19 +10,28 @@ var MasterModel = class{
 var ItemModel = class{
 	constructor(item) {
 		var self = this;
-		this.masterName = item.MasterName;
-		this.clientName = item.ClientName;
-		this.clientPhone = item.ClientPhone;
-		this.serviceName = item.ServiceName;
-		this.price = item.Price+" руб.";
-		this.duration = item.Duration+" ч.";
-		this.bookingTime = item.BookingTime;
-		this.comment = item.Comment;
+		this.id = item!=undefined ? item.Id : "";;
+		this.masterName = ko.observable(item!=undefined ? item.MasterName: "");
+		this.clientName = ko.observable(item!=undefined ? item.ClientName:"");
+		this.clientPhone = item!=undefined ? item.ClientPhone : "";
+		this.serviceName = item!=undefined ? item.ServiceName : "";
+		this.price = item!=undefined ? item.Price+" руб." : "";
+		this.duration = item!=undefined ? item.Duration+" ч." : "";
+		this.bookingTime = item!=undefined ? item.BookingTime : "";
+		this.comment = item!=undefined ? item.Comment : "";
 		this.showTime = ko.computed(function() {
 			var momentDate = Kalendae.moment(self.bookingTime);
 			return momentDate.format('DD.MM.YYYY HH:mm');
 		});
+		this.show = ko.observable(false);
 	}
+	
+	/*save() {
+		$.post("/users/editUser", {id: this.id(),name:this.name(), email:this.email(), password:this.password(), submit:'Редактировать'})
+			.done(function(result) {
+					alert('Изменения сохранены');
+			})
+	}/**/
 };
 
 var BookingModel = class {
@@ -30,6 +39,7 @@ var BookingModel = class {
 		var self = this;
 		this.itemsUrl = "/booking/GetRows";
 		this.countItemsUrl = "/booking/GetCountRows";
+		this.deleteItemUrl = "/booking/DeleteRowById";
 		this.getMastersUrl = "/home/GetMasters";
 		//-------------------------------------------------------------------
 		this.masters = ko.observableArray([]);	
@@ -40,12 +50,13 @@ var BookingModel = class {
 		this.getMasters();
     	//-------------------------------------------------------------------
 		this.items = ko.observableArray([]);
+		this.editor = new ItemModel();
 		this.isItemsBusy = ko.observable(true);
 		//-------------------------------------------------------------------
 		this.pagination = new PaginationModel();
 		this.run();
 	}
-	
+
 	run(){
 		var self = this;
 		self.pagination.currentPage(1);
@@ -135,6 +146,37 @@ var BookingModel = class {
 			});
 		});
 	}
+	
+	removeItem(id){
+		var self = this;
+		var canDelete = confirm("Вы уверены что хотите удалить запись?");
+		if(canDelete){
+			var data = { id : id };
+			$.post(self.deleteItemUrl, data)
+			.done(function(result) {
+				var status = JSON.parse(result);
+				if(status == true){
+					self.run();
+				}
+			});
+		}
+	}
+	
+	editItem(item) {
+		var self = this;
+		self.editor.clientName(item.clientName());
+        $('#editDisplay').dialog({
+            modal: true,
+            buttons: {
+                Accept: function() {
+					$(this).dialog("close");
+                },
+                Cancel: function() {
+                    $(this).dialog("close");
+                }
+            }
+        });
+    }
 }
 
 
