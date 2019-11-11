@@ -48,12 +48,12 @@
 							</tr>
 							<!-- ko foreach: items -->
 								<tr class="row">
-									<td data-bind="text:masterName"></td>
+									<td data-bind="text:master().name()"></td>
 									<td data-bind="text:clientName"></td>
 									<td data-bind="text:clientPhone"></td>
-									<td data-bind="text:serviceName"></td>
-									<td data-bind="text:price"></td>
-									<td data-bind="text:duration"></td>
+									<td data-bind="text:service().name()"></td>
+									<td data-bind="text:service().price()"></td>
+									<td data-bind="text:service().duration()"></td>
 									<td data-bind="text:showTime"></td>
 									<td class="left_text" data-bind="text:comment"></td>
 									<td><div class="ico_edit fa fa-pencil-square-o" data-bind="click: function() { $parent.editItem($data); }"></div></td>
@@ -77,19 +77,32 @@
 		<?php echo $this->footer; ?>
 		
 		<div id="editDisplay" style="display:none">
-			<div>Клиент: <input data-bind="value: editor.clientName" /></div>
+			<!-- ko ifnot: isMastersBusy -->
+				<div>Мастер: <select data-bind="options: masters, optionsText: 'name', optionsValue: 'id', value: editor.master().id, optionsCaption: '-'"></select></div>
+			<!-- /ko -->
+			<!-- ko ifnot: isServiceBusy -->
+				<div>Сервис: <select data-bind="options: services, optionsText: 'name', optionsValue: 'id', value: editor.service().id, optionsCaption: '-'"></select></div>
+			<!-- /ko -->
+			<div>Время записи: <div data-bind="text: editor.bookingTime()"></div>
+				<button class="button-item button-enable" type="submit" data-bind="click: function() { takeTimeMode() }">Изменить</button>
+			</div>				
 		</div>
 
 		<script type="text/javascript" src="/scripts/jquery-3.4.1.js"></script>
 		<script type="text/javascript" src="/scripts/jquery-ui.min.js"></script>
         <script type="text/javascript" src="/scripts/knockout-3.5.0.js"></script>
+		<script type="text/javascript" src="/scripts/koExternalTemplateEngine_all.js"></script>
+		<script type="text/javascript" src="/scripts/models/home/baseBlock.js"></script>
+		<script type="text/javascript" src="/scripts/models/home/mastersBlock.js"></script>
+		<script type="text/javascript" src="/scripts/models/home/skillsBlock.js"></script>
 		<script type="text/javascript" src="/scripts/kalendae.standalone.js"></script>
         <script type="text/javascript" src="/scripts/models/booking/booking.js"></script>
 		<script type="text/javascript" src="/scripts/models/shared/paginationModel.js"></script>
+		<script type="text/javascript" src="/scripts/models/home/calendarBlock.js"></script>
 		<script>
 			let viewModel = new BookingModel();
 			ko.applyBindings(viewModel);
-		</script>		
+		</script>
 	</body>
 </html>
 	

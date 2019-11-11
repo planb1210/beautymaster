@@ -7,9 +7,11 @@ class Booking
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 		$sqlText = "select b.Id as Id, 
+							u.Id as MasterId,
 							u.Name as MasterName, 
 							c.Name as ClientName, 
 							c.Phone as ClientPhone, 
+							s.Id as ServiceId, 
 							s.Name as ServiceName, 
 							s.Price as Price, 
 							s.Duration as Duration, 

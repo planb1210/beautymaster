@@ -7,8 +7,8 @@ var Skill = class {
         var self = this;
 		this.id = ko.observable(data.Id);
 		this.name = ko.observable(data.Name);
-		this.price = ko.observable(data.Price);	
-		this.duration = ko.observable(data.Duration);	
+		this.price = ko.observable(data.Price + " руб.");
+		this.duration = ko.observable(data.Duration + " ч.");
 		this.description = ko.observable(data.Description);
 		this.divisionId = ko.observable(data.DivisionId);
 	}
